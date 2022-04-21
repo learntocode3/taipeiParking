@@ -1,10 +1,52 @@
 .top{
     display:flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin-bottom: 10px;
+
 }
 .right{
     display:flex;
 }
 .right > div {
     margin-left: 5px;
+    border-radius: 5px;
+    width:80px;
+    text-align: center;
+    border: 1px solid rgb(179, 175, 175);
+}
+section{
+    margin: 0 auto;
+    display: flex;
+    border-radius: 5px;
+    border: 1px solid grey;
+    width: 600px;
+    height: 705px;
+    padding-top: 25px;
+    flex-direction: column;
+    align-items: center;
+}
+.findOrOffer{
+    display: flex;
+    width: 500px;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+.findOrOffer > div {
+    border-radius: 5px;
+    border: 1px solid rgb(201, 201, 201);
+    width: 150px;
+    text-align: center;
+}
+.findInput{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 500px;
+}
+.parkMap{
+    margin-top: 40px;
+    width: 500px;
+}
+.matchButton{
+    margin-top:40px
 }
