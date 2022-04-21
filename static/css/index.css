@@ -1,0 +1,10 @@
+.top{
+    display:flex;
+    justify-content: space-between;
+}
+.right{
+    display:flex;
+}
+.right > div {
+    margin-left: 5px;
+}
