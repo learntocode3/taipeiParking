@@ -11,6 +11,13 @@
     <nav>
         <div class="top">
             <div class="left">首頁</div>
+        
+            <div class="rentNow">即時租位</div>
+    
+    
+            <div class="longTerm">長期租位</div>
+          
+            
             <div class="right">
                 <div>註冊</div>
                 <div>登入</div>
@@ -22,16 +29,36 @@
 
     <section>
         <div class="findOrOffer">
-            <div>找車位</div>
-            <div>供車位</div>
+            <div id="findSpace">找車位</div>
+            <div id="offerSpace">供車位</div>
         </div>
-        <div class="findInput">
-            <label>時間：</label><input>
-            <label>地點：</label><input>
-            <label>價錢：</label><input>
+        <div class="findSpaceInput">
+            <label>地點：</label><input name="address">
             <img class="parkMap" src="https://www.spotangels.com/blog/wp-content/uploads/2019/04/map_toronto.png">  
         </div>
-        <button class="matchButton">送出</button> 
+        <div class="offerSpaceInput">
+            <label>地點：</label><input>
+            <label>價錢（每小時）：</label><input>
+            <label>可開放時段：</label>
+
+            <label for="from">從：</label>
+            <input type="time" id="from" name="from">
+            <label for="to">到：</label>
+            <input type="time" id="to" name="to">
+
+            <div>是否接受臨租：</div>
+            <input type="radio" name="YesNo" value="yes">
+            <label for="yes">接受</label required>
+            
+            <input type="radio" name="YesNo" value="no">
+            <label for="no">不接受</label required>
+            
+        </div>
+
+
+        <button class="matchRightNow">送出</button>
+        <button class="matchLongTerm">送出</button> 
+        <button class="offerSpaceBtn">送出</button>  
         
 
 

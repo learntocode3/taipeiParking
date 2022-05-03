@@ -1,7 +1,9 @@
 from flask import *
 from settings import SECRET_KEY
+from api.bookingApi import bookingAPI
 
 app=Flask(__name__)
+app.register_blueprint(bookingAPI)
 
 app.secret_key = SECRET_KEY
 
@@ -13,6 +15,10 @@ app.config['JSON_SORT_KEYS'] = False
 @app.route("/")
 def index():
 	return render_template("index.html")
+
+@app.route("/booking")
+def booking():
+	return render_template("booking.html")
 
 
 # 開發
