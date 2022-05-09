@@ -1,9 +1,11 @@
 from flask import *
 from settings import SECRET_KEY
 from api.bookingApi import bookingAPI
+from api.userApi import userAPI
 
 app=Flask(__name__)
 app.register_blueprint(bookingAPI)
+app.register_blueprint(userAPI)
 
 app.secret_key = SECRET_KEY
 
@@ -15,6 +17,14 @@ app.config['JSON_SORT_KEYS'] = False
 @app.route("/")
 def index():
 	return render_template("index.html")
+
+@app.route("/login")
+def login():
+	return render_template("logIn.html")
+
+@app.route("/signup")
+def signup():
+	return render_template("signUp.html")
 
 @app.route("/booking")
 def booking():

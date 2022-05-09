@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>A basic HTML table</h2>
+
+<table>
+  <tr>
+    <th></th>
+    <th>一</th>
+    <th>二</th>
+    <th>三</th>
+    <th>四</th>
+    <th>五</th>
+    <th>六</th>
+    <th>日</th>
+  </tr>
+  <tr>
+    <td>07-13</td>
+    <td><input type="checkbox" name="t-1"></td>
+    <td><input type="checkbox" name="t-2"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+  <tr>
+    <td>13-19</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+  <tr>
+    <td>19-01</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+  <tr>
+    <td>01-07</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+  </tr>
+</table>
+
+<button class="aaa">send</button>
+    <script>
+
+        const aaa=document.querySelector(".aaa")
+
+        aaa.addEventListener('click', getValue)
+
+        function getValue(e){
+            e.preventDefault;
+            const t1=document.querySelector('input[name="t-1"]').checked
+            const t2=document.querySelector('input[name="t-2"]').checked
+            console.log(t1)
+            console.log(t2)
+
+        }
+
+
+
+        
+    </script>
+</body>
+</html>

@@ -9,3 +9,4 @@ def insertSearch():
     req=request.get_json()
     print(req)
     return {'data':'ok'}
+
