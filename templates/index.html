@@ -10,17 +10,13 @@
 <body>
     <nav>
         <div class="top">
-            <div class="left">首頁</div>
-        
-            <div class="rentNow">即時租位</div>
-    
-    
-            <div class="longTerm">長期租位</div>
-          
-            
+            <div class="left">首頁</div>  
             <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
                 <div class="signUp">註冊</div>
                 <div class="signIn">登入</div>
+                <div class="member">會員中心</div>
             </div>
         </div>
     </nav>
@@ -30,7 +26,6 @@
     <section>
         <div class="findOrOffer">
             <div id="findSpace">找車位</div>
-            <div id="offerSpace">供車位</div>
         </div>
         <div class="findSpaceInput">
             <label>地點：</label><input name="willingAddress">
@@ -38,34 +33,8 @@
             <label>價錢：</label><input name="willingPrice">
              
         </div>
-        <div class="offerSpaceInput">
-            <label>地點：</label><input name="offerAddress">
-            <label>價錢（每小時）：</label><input name="offerPrice">
-            <label>可開放時段：</label>
-
-            <label for="from">從：</label>
-            <input type="time" id="section-1-start" name="from" step="3600000">
-            <label for="to">到：</label>
-            <input type="time" id="section-1-end" name="to" step="3600000">
-
-            <label for="from">從：</label>
-            <input type="time" id="section-2-start" name="from" step="3600000">
-            <label for="to">到：</label>
-            <input type="time" id="section-2-end" name="to" step="3600000">
-
-            <label for="from">從：</label>
-            <input type="time" id="section-3-start" name="from" step="3600000">
-            <label for="to">到：</label>
-            <input type="time" id="section-3-end" name="to" step="3600000">
-
-            
-        </div>
-
-
+ 
         <button class="matchRightNow">送出</button>
-        <button class="offerSpaceBtn">送出</button>  
-        
-
 
     </section>
 

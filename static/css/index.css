@@ -10,7 +10,7 @@
     border-radius: 5px;
     width:150px;
     text-align: center;
-    border: 1px solid rgb(179, 175, 175);
+    border: 1px solid rgb(201, 197, 197);
 }
 
 
@@ -28,7 +28,7 @@ section{
     margin: 0 auto;
     display: flex;
     border-radius: 5px;
-    border: 1px solid grey;
+    border: 1px solid rgb(223, 218, 218);
     width: 600px;
     height: 705px;
     padding-top: 25px;
@@ -47,9 +47,6 @@ section{
     width: 150px;
     text-align: center;
 }
-#offerSpace{
-    display:none;
-}
 
 
 .findSpaceInput{
@@ -58,27 +55,17 @@ section{
     flex-wrap: wrap;
     width: 500px;
 }
-.parkMap{
-    margin-top: 40px;
-    width: 500px;
-}
+
 .offerSpaceInput{
-    display:none;
+    display:flex;
     flex-direction: column;
     flex-wrap: wrap;
     width: 500px;
 }
 
-
-
 .matchRightNow{
     margin-top:40px
 }
-.matchLongTerm{
-    display: none;
-    margin-top:40px
-}
 .offerSpaceBtn{
-    display: none;
     margin-top:40px
 }
