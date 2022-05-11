@@ -1,28 +1,16 @@
-const offerPlace = document.querySelector(".offerNow")
-const rentNow = document.querySelector(".rentNow")
+// send request
+statusCheck();
 const rentNowBtn = document.querySelector(".matchRightNow")
 
-
-offerPlace.addEventListener('click', directToOfferPage)
 rentNowBtn.addEventListener('click', sendSearchPlace)
-rentNow.addEventListener('click', changetoRentNow)
-
-
-function directToOfferPage(){
-    window.location.replace('/offer');
-}
-
-function changetoRentNow(){
-    window.location.replace('/');
-}
 
 function sendSearchPlace(e){
     e.preventDefault();
-
     const searchData={
         "address": document.querySelector('input[name="willingAddress"]').value,
-        "time": document.querySelector('input[name="willingTime"]').value,
-        "price": document.querySelector('input[name="willingPrice"]').value
+        "price": document.querySelector('input[name="willingPrice"]').value,
+        "start": document.getElementById('start').value,
+        "end": document.getElementById('end').value,
     }
     console.log(searchData)
     fetch('/api/booking',{

@@ -3,18 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        section{
+            display:flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        section > div{
+            margin-bottom: 10px;
+        }
+        section > input{
+            margin-bottom: 10px;
+        }
+    </style>
     <title>Sign In</title>
 </head>
 <body>
-    <div>Sign In</div>
-    <input type="text" name="email">
-    <input type="password" name="password">
-    <div class="status"></div>
-    
-    <button class="memberSignIn">Sign In</button>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+                <div class="member">會員中心</div>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div>Sign In</div>
+        <input type="text" name="email" placeholder="請輸入信箱">
+        <input type="password" name="password" placeholder="請輸入密碼">
+        <div class="status"></div>     
+        <button class="memberSignIn">Sign In</button>
+    </section>
 
 
+    <script src="/static/javascript/nav.js"></script>
     <script src="/static/javascript/login.js"></script>
 </body>
 </html>

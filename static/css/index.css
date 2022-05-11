@@ -1,36 +1,7 @@
-.top{
-    display:flex;
-    justify-content: space-evenly;
-    margin-bottom: 10px;
-
-}
-
-.middle > div {
-    margin-left: 5px;
-    border-radius: 5px;
-    width:150px;
-    text-align: center;
-    border: 1px solid rgb(201, 197, 197);
-}
-
-
-.right{
-    display:flex;
-}
-.right > div {
-    margin-left: 5px;
-    border-radius: 5px;
-    width:80px;
-    text-align: center;
-    border: 1px solid rgb(179, 175, 175);
-}
 section{
     margin: 0 auto;
     display: flex;
-    border-radius: 5px;
-    border: 1px solid rgb(223, 218, 218);
     width: 600px;
-    height: 750px;
     padding-top: 25px;
     flex-direction: column;
     align-items: center;
@@ -41,11 +12,8 @@ section{
     justify-content: space-around;
     margin-bottom: 40px;
 }
-.findOrOffer > div {
-    border-radius: 5px;
-    border: 1px solid rgb(201, 201, 201);
-    width: 150px;
-    text-align: center;
+#findSpace{
+    font-size: 30px;
 }
 
 
@@ -56,6 +24,16 @@ section{
     width: 500px;
 }
 
+.findSpaceInput > input{
+    padding: 10px 10px;
+    margin: 10px;
+}
+
+.offerSpaceInput > input{
+    padding: 10px 10px;
+    margin: 10px;
+}
+
 .offerSpaceInput{
     display:flex;
     flex-direction: column;
@@ -64,8 +42,21 @@ section{
 }
 
 .matchRightNow{
-    margin-top:40px
+    margin-top:40px;
+    width: 450px;
+    color: white;
+    background-color: rgb(91, 91, 227);
+    border: none;
+    padding: 10px 10px;
+    border-radius: 4px;
 }
 .offerSpaceBtn{
-    margin-top:40px
+    margin-top:40px;
+    margin-bottom: 50px;
+    width: 450px;
+    color: white;
+    background-color: rgb(91, 91, 227);
+    border: none;
+    padding: 10px 10px;
+    border-radius: 4px;
 }

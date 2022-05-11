@@ -19,7 +19,7 @@ cnxpool = mysql.connector.pooling.MySQLConnectionPool(pool_name = "mypool",
 
 
 #每次檢查要資料
-def db_getUserInfo(name):
+def getUserInfo(name):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     query = ("SELECT * FROM member WHERE member.name = %s")
@@ -28,16 +28,17 @@ def db_getUserInfo(name):
     user = cursor.fetchone()
     cursor.close()
     cnx.close()
-    data = {}
-    data['data'] = {}
-    if user:
-        data['data']['id'] = user[0]
-        data['data']['name'] = user[1]
-        data['data']['email'] = user[2]
-        return data
+    return bool(user)
+    # data = {}
+    # data['data'] = {}
+    # if user:
+    #     data['data']['id'] = user[0]
+    #     data['data']['name'] = user[1]
+    #     data['data']['email'] = user[2]
+    #     return data
 
 #使用者登入
-def db_memberSignin(email, password):
+def memberSignin(email, password):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     query = ("SELECT * FROM member WHERE member.email = %s AND member.password = %s")
@@ -51,7 +52,7 @@ def db_memberSignin(email, password):
         return user
 
 #檢查使用者信箱是否已經被註冊
-def db_checkIfEmailExist(email):
+def checkIfEmailExist(email):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     query = ("SELECT * FROM member WHERE member.email = %s")
@@ -64,7 +65,7 @@ def db_checkIfEmailExist(email):
   
 
 #使用者註冊
-def db_addNewMember(name, email, password):
+def addNewMember(name, email, password):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     add_member = ("INSERT INTO member "
@@ -78,7 +79,7 @@ def db_addNewMember(name, email, password):
     cnx.close()
 
 #通過session name 得到 member ID
-def db_getIdBySessionName(name):
+def getIdBySessionName(name):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     query = ("SELECT member.id FROM member WHERE member.name = %s")
@@ -91,7 +92,7 @@ def db_getIdBySessionName(name):
         return user    
 
 #新增資料到supply
-def db_insertToSupply(space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour):
+def insertToSupply(space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     add_supply = ("INSERT INTO supply "
@@ -108,7 +109,7 @@ def db_insertToSupply(space_onwer_id, parking_space_name, parking_space_address,
     print("成功取得新增ID")
     return id
 
-def db_insertToSupplyStatus(parking_space_id, space_status):
+def insertToSupplyStatus(parking_space_id, space_status):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     add_supply_status = ("INSERT INTO supply_status "
@@ -121,7 +122,7 @@ def db_insertToSupplyStatus(parking_space_id, space_status):
     cnx.close()
 
 
-def db_insertToSupplyTimetable(id, time_1_start, time_1_end, time_2_start, time_2_end, time_3_start, time_3_end):
+def insertToSupplyTimetable(id, time_1_start, time_1_end, time_2_start, time_2_end, time_3_start, time_3_end):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     add_supply_timetable = ("INSERT INTO supply_timetable "
@@ -132,3 +133,25 @@ def db_insertToSupplyTimetable(id, time_1_start, time_1_end, time_2_start, time_
     print("supply timetable 新增成功")
     cursor.close()
     cnx.close()
+
+
+def checkIfSpaceNumberExist(parking_space_address, parking_space_number):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT * FROM check_spaceNum WHERE parking_space_address = %s AND parking_space_number= %s")
+    data_query=(parking_space_address, parking_space_number)
+    cursor.execute(query, data_query)
+    user = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return bool(user)
+
+def selectAllGps():
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT latitude, longtitude, parking_space_id FROM supply ")
+    cursor.execute(query,)
+    allGPS = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return allGPS

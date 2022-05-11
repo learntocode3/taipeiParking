@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
     <link rel= "stylesheet" type="text/css" href="/static/css/index.css">
     <title>Taipei Parking</title>
 </head>
 <body>
     <nav>
         <div class="top">
-            <div class="left">首頁</div>  
+            <div class="left">EZpark</div>  
             <div class="right">
                 <div class="rentNow">找車位</div>
                 <div class="offerNow">供車位</div>
-                <div class="signUp">註冊</div>
                 <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
                 <div class="member">會員中心</div>
             </div>
         </div>
@@ -25,12 +27,15 @@
 
     <section>
         <div class="findOrOffer">
-            <div id="findSpace">找車位</div>
+            <div id="findSpace">即刻找到適合的車位</div>
         </div>
         <div class="findSpaceInput">
-            <label>地點：</label><input name="willingAddress">
-            <label>時間：</label><input name="willingTime">
-            <label>價錢：</label><input name="willingPrice">
+            <label>地點：</label><input name="willingAddress" placeholder="請輸入要查詢車位的地址">
+            <label>價錢：</label><input name="willingPrice" placeholder="請輸入偏好每小時的收費">
+            <label for="from">預計開始時間：</label>
+            <input type="time" id="start" name="from" step="3600000">
+            <label for="to">預計結束時間：</label>
+            <input type="time" id="end" name="to" step="3600000">
              
         </div>
  
@@ -38,6 +43,7 @@
 
     </section>
 
+    <script src="/static/javascript/nav.js"></script>
     <script src="/static/javascript/index.js"></script>
 </body>
 </html>

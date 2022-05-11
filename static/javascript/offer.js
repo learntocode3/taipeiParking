@@ -1,13 +1,8 @@
+// Send Request
+statusCheck();
 const offerSpaceBtn = document.querySelector(".offerSpaceBtn")
-const rentNow = document.querySelector(".rentNow")
 
-rentNow.addEventListener('click', directToRentPage)
 offerSpaceBtn.addEventListener('click', sendOfferPlace)
-
-
-function directToRentPage(){
-    window.location.replace('/');
-}
 
 function sendOfferPlace(e){
     e.preventDefault();
