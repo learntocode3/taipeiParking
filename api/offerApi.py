@@ -19,8 +19,8 @@ def insertOffer():
     parking_space_number = req['parking_space_number']
     # print(parking_space_name, parking_space_address, parking_space_number)
     GPS = getGPS(parking_space_address)
-    longtitude = GPS[0]
-    latitude = GPS[1]
+    longtitude = GPS[1]
+    latitude = GPS[0]
     # print(longtitude, latitude)
     price_per_hour = req['price']
     # print(price_per_hour)

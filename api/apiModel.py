@@ -149,9 +149,40 @@ def checkIfSpaceNumberExist(parking_space_address, parking_space_number):
 def selectAllGps():
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
-    query = ("SELECT latitude, longtitude, parking_space_id FROM supply ")
+    query = ("SELECT supply.latitude, supply.longtitude, supply.parking_space_id FROM supply JOIN supply_status ON supply.parking_space_id = supply_status.parking_space_id WHERE supply_status.space_status='true' ")
     cursor.execute(query,)
     allGPS = cursor.fetchall()
     cursor.close()
     cnx.close()
     return allGPS
+
+# a = selectAllGps()
+# print(a)
+
+def checkTime(parkingID):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT * FROM supply_timetable WHERE parking_space_id = %s")
+    data_query=(parkingID, )
+    cursor.execute(query, data_query)
+    timetable = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return timetable
+
+# a = checkTime(4)
+# print(a)
+
+def getAddressNumPriceById(parkingID):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT parking_space_address, price_per_hour, parking_space_number  FROM supply WHERE parking_space_id = %s")
+    data_query=(parkingID, )
+    cursor.execute(query, data_query)
+    info = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return info
+
+# a = getAddressPriceById(7)
+# print(a)

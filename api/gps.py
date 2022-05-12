@@ -15,7 +15,7 @@ def getGPS(address):
     response = requests.get(base_url, params=params)
     geometry = response.json()['results'][0]['geometry']
     longtitude, latitude = geometry['location']['lng'] , geometry['location']['lat']
-    return [longtitude, latitude]
+    return [latitude, longtitude]
 
 # print('經度 : ', longtitude)
 # print('緯度 : ', latitude)
@@ -28,8 +28,8 @@ from geopy import distance
 
 def getDistance(lat1,long1,lat2,long2):
     return distance.distance((lat1, long1), (lat2, long2)).km
-d = getDistance(25.0817187, 121.5930352,25.0803634, 121.5674973)
-print(d)
+# d = getDistance(25.0817187, 121.5930352,25.0803634, 121.5674973)
+# print(d)
 
 
 
