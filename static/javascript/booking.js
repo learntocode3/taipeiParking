@@ -27,9 +27,26 @@ function getLatestUserSearch(){
             const fee=document.createElement("div")
             fee.innerText= data.data[i][5] + "/hr"
         
-            const book=document.createElement("div")
-            book.classList.add('book')
-            book.innerText=" 預約 "
+            const book=document.createElement("button")
+            book.innerText=" 開始預約 ";
+
+            book.addEventListener("click", function(){
+                console.log(i)
+                orderData={
+                    "spaceId":data.data[i][0]
+                }
+                fetch('/api/order',{
+                    method:'POST',
+                    body:JSON.stringify(orderData),
+                    headers: new Headers({
+                        "content-type":"application/json"
+                    })
+                })
+                .then(res => res.json())
+                .then(function(data){
+                    console.log(data.data)
+                })
+            })
         
             item.appendChild(place)
             item.appendChild(distance)

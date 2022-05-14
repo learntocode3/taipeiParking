@@ -3,11 +3,13 @@ from settings import SECRET_KEY
 from api.bookingApi import bookingAPI
 from api.offerApi import offerAPI
 from api.userApi import userAPI
+from api.orderApi import orderAPI
 
 app=Flask(__name__)
 app.register_blueprint(bookingAPI)
 app.register_blueprint(offerAPI)
 app.register_blueprint(userAPI)
+app.register_blueprint(orderAPI)
 
 app.secret_key = SECRET_KEY
 
