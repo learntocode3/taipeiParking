@@ -36,10 +36,12 @@ def insertOffer():
     if isExist:
         return {"data": "車位號碼已經存在"}
 
-    #新增資料到三個表
+    #新增資料到四個表
     id = sql.insertToSupply(space_onwer_id, parking_space_name, parking_space_address, parking_space_number, longtitude, latitude, price_per_hour)
     # print(id)
+    sql.insertToCheckSpaceNum(id[0], parking_space_address, parking_space_number)
     sql.insertToSupplyStatus(id[0], "true")
     sql.insertToSupplyTimetable(id[0], time_1_start, time_1_end, time_2_start, time_2_end, time_3_start, time_3_end)
-
     return {'data':'ok'}
+
+

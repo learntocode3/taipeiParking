@@ -5,8 +5,7 @@ import sys
 sys.path.append('./')
 from settings import USER, PASSWORD
 
-dbconfig = {
-    
+dbconfig = { 
     'user':USER,
     'database':'ezpark',
     'password':PASSWORD,
@@ -185,4 +184,47 @@ def getAddressNumPriceById(parkingID):
     return info
 
 # a = getAddressPriceById(7)
+# print(a)
+
+
+def insertToCheckSpaceNum(parking_space_id, parking_space_address, parking_space_number):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    add_supply_checkSpaceNum = ("INSERT INTO check_spaceNum "
+                  "VALUES (%s, %s, %s)")
+    data_supply = (parking_space_id, parking_space_address, parking_space_number)
+    cursor.execute(add_supply_checkSpaceNum, data_supply)
+    cnx.commit()
+    print("supply checkSpaceNum 新增成功")
+    cursor.close()
+    cnx.close()    
+
+
+def insertUserSearch(user_id, demandAddress, demandPrice, demandStart, demandEnd):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    add_searchData = ("INSERT INTO search_data (user_id, demandAddress, demandPrice, demandStart, demandEnd)"
+                  "VALUES (%s, %s, %s, %s, %s)")
+    data_supply = (user_id, demandAddress, demandPrice, demandStart, demandEnd)
+    cursor.execute(add_searchData, data_supply)
+    cnx.commit()
+    print("add_searchData 新增成功")
+    cursor.close()
+    cnx.close()   
+
+
+# insertUserSearch(1, "asdfasd", 21, "12:30", "15:30")
+
+def getSearchData(user_id):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT * FROM search_data WHERE user_id = %s ORDER BY search_time DESC LIMIT 0,1")
+    data_query=(user_id,)
+    cursor.execute(query, data_query)
+    user = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return user
+
+# a = getSearchData(1)
 # print(a)
