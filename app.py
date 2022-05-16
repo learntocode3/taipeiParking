@@ -39,6 +39,10 @@ def signup():
 def booking():
 	return render_template("booking.html")
 
+@app.route("/order/<id>")
+def order(id):
+	return render_template("order.html")
+
 
 # 開發
 if __name__ == '__main__':

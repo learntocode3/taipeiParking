@@ -35,7 +35,7 @@ function getLatestUserSearch(){
                 orderData={
                     "spaceId":data.data[i][0]
                 }
-                fetch('/api/order',{
+                fetch('/api/start/order',{
                     method:'POST',
                     body:JSON.stringify(orderData),
                     headers: new Headers({
@@ -45,6 +45,9 @@ function getLatestUserSearch(){
                 .then(res => res.json())
                 .then(function(data){
                     console.log(data.data)
+                    if (data.status === "ok"){
+                        location.replace(`/order/${data.orderId}`); 
+                    }
                 })
             })
         

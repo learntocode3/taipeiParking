@@ -228,3 +228,80 @@ def getSearchData(user_id):
 
 # a = getSearchData(1)
 # print(a)
+
+
+def insertOrder(user_id, spaceId, current_time):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    add_order = ("INSERT INTO user_order (member_id, parking_space_id, time_start)"
+                  "VALUES (%s, %s, %s)")
+    data_order = (user_id, spaceId, current_time)
+    cursor.execute(add_order, data_order)
+    cnx.commit()
+    print("order 新增成功")
+    cursor.execute("SELECT LAST_INSERT_ID();")
+    id = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    print("成功新增的訂單ID")
+    return id
+
+# a = insertOrder(2, 8, "13:00")
+# print(a)
+
+def changeSpaceStatusToFalse(spaceId):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    change_status = ("UPDATE supply_status SET space_status='false' WHERE parking_space_id= %s")
+    id = (spaceId,)
+    cursor.execute(change_status, id)
+    cnx.commit()
+    print("車位狀況變更為false")
+    cursor.close()
+    cnx.close()
+
+# changeSpaceStatusToFalse(4)
+
+
+def changeSpaceStatusToTrue(spaceId):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    change_status = ("UPDATE supply_status SET space_status='true' WHERE parking_space_id= %s")
+    id = (spaceId,)
+    cursor.execute(change_status, id)
+    cnx.commit()
+    print("車位狀況變更為true")
+    cursor.close()
+    cnx.close()       
+
+# changeSpaceStatusToTrue(5)
+# changeSpaceStatusToTrue(7)
+# changeSpaceStatusToTrue(9)
+# changeSpaceStatusToTrue(10)
+
+
+def updateOrder(order_id, finish_time):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    change_status = ("UPDATE user_order SET time_end=%s WHERE order_id= %s")
+    finish_time = (finish_time, order_id)
+    cursor.execute(change_status, finish_time)
+    cnx.commit()
+    print("新增結束時間")
+    cursor.close()
+    cnx.close()  
+
+
+def getOrderData(orderId):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT * FROM user_order WHERE order_id = %s ")
+    data_query=(orderId,)
+    cursor.execute(query, data_query)
+    data = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return data
+
+# a = getOrderData(4)
+# print(a)
