@@ -1,7 +1,23 @@
+.all{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 .tpfield {
     height: 40px;
     width: 300px;
     border: 1px solid gray;
     margin: 5px 0;
     padding: 5px;
+}
+
+.order-Btn{
+    width: 280px;
+    color: white;
+    background-color: rgb(91, 91, 227);
+    border: none;
+    padding: 10px 10px;
+    border-radius: 4px;
 }

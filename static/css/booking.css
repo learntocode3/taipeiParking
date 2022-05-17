@@ -1,11 +1,29 @@
+.availableList{
+    display: flex;
+    justify-content: center;
+}
+
 .item{
-    display:flex;
-    justify-content: space-evenly;
+    display: flex;
     margin-top: 10px;
+    flex-direction: column;
+    border: 1px solid rgb(179, 175, 175);
+    border-radius: 5px;
+    width: 60%;
+    align-items: center;
+    padding: 10px;
 }
 .book{
     text-align: center;
     border-radius: 5px;
     width:80px;
     border: 1px solid rgb(179, 175, 175);
+}
+button{
+    width: 230px;
+    color: white;
+    background-color: rgb(91, 91, 227);
+    border: none;
+    padding: 5px 0px;
+    border-radius: 6px;
 }

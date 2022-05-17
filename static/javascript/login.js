@@ -1,5 +1,5 @@
-const base_url = "http://127.0.0.1:3000"
-const userAPI= `${base_url}/api/user`;
+// const base_url = "http://127.0.0.1:3000"
+const userAPI= '/api/user';
 
 const signIn=document.querySelector('.memberSignIn')
 signIn.addEventListener('click', memberSignin)

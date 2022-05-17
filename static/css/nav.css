@@ -30,3 +30,17 @@
 .member{
     display: none;
 }
+
+@media(max-width:800px){
+    .top{
+        justify-content: space-around;
+    }
+    .right > div {
+        width: 40px;
+        font-size: 12px;
+    }
+    .left{
+        font-size: 20px;
+    }
+
+}

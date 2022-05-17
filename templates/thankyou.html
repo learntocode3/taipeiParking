@@ -4,17 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <style>
+        .all{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button{
+            width: 230px;
+            color: white;
+            background-color: rgb(91, 91, 227);
+            border: none;
+            padding: 5px 0px;
+            border-radius: 6px;
+        }
+    </style>
+    <title>Thank you</title>
 </head>
 <body>
-    <div>thank you</div>
-    <button id="refundBtn">車位有狀況，及時退款</button>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+                <div class="member">會員</div>
+            </div>
+        </div>
+    </nav>
 
+    <div class="all">
+        <div class="record"></div>
+        <a href="/" style="margin:10px;">回首頁</a>
+        <button id="refundBtn">車位有狀況，及時退款</button>
+    </div>
 
+<script src="/static/javascript/nav.js"></script>
 <script>
     const orderId = document.URL.split("/").slice(-1)
 
     console.log(orderId[0])
+    const record=document.querySelector('.record')
+    record.innerHTML="感謝您這次的消費，"+"這次的訂單編號："+orderId[0]
 
     const refundBtn=document.querySelector('#refundBtn')
 
