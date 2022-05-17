@@ -63,7 +63,8 @@ def getCreditCard():
     prime=req['prime']
     member_id = req['id']
     personalInfoForCard=sql.getMemberData(member_id)
-    phone_number=personalInfoForCard[6]
+    print(personalInfoForCard)
+    phone_number=personalInfoForCard[4]
     name=personalInfoForCard[1]
     email=personalInfoForCard[2]
     
