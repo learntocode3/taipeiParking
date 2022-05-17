@@ -64,18 +64,48 @@ def checkIfEmailExist(email):
   
 
 #使用者註冊
-def addNewMember(name, email, password):
+def addNewMember(name, email, phone, password):
     cnx = cnxpool.get_connection()
     cursor = cnx.cursor()
     add_member = ("INSERT INTO member "
-                  "(name, email, password) " 
-                  "VALUES (%s, %s, %s)")
-    data_member = (name, email, password)
+                  "(name, email, password, phone) " 
+                  "VALUES (%s, %s, %s, %s)")
+    data_member = (name, email, password, phone)
     cursor.execute(add_member, data_member)
     cnx.commit()
     print("成功新增使用者")
+    cursor.execute("SELECT LAST_INSERT_ID();")
+    id = cursor.fetchone()
     cursor.close()
     cnx.close()
+    print("成功取得 member ID")
+    return id[0]
+
+def getMemberData(member_id):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT * FROM member WHERE id = %s")
+    data_query=(member_id, )
+    cursor.execute(query, data_query)
+    user = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return user
+  
+# a = getMemberData(9)
+# print(a)
+
+def addCreditCard(member_id, card_token, card_key):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    change_status = ("UPDATE member SET card_token=%s, card_key=%s WHERE id= %s")
+    card_data = (card_token, card_key, member_id)
+    cursor.execute(change_status, card_data)
+    cnx.commit()
+    print("新增card")
+    cursor.close()
+    cnx.close()  
+
 
 #通過session name 得到 member ID
 def getIdBySessionName(name):
@@ -305,3 +335,45 @@ def getOrderData(orderId):
 
 # a = getOrderData(4)
 # print(a)
+
+def getCardSecret(user_id):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT card_token, card_key FROM member WHERE id = %s")
+    data_query=(user_id,)
+    cursor.execute(query, data_query)
+    data = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return data
+
+# a = getCardSecret(11)
+# print(a)
+
+def addRecTradeId(orderId, rec_trade_id):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    change_status = ("UPDATE user_order SET rec_trade_id=%s WHERE order_id= %s")
+    rec_trade_data = (rec_trade_id, orderId)
+    cursor.execute(change_status, rec_trade_data)
+    cnx.commit()
+    print("新增 rec_trade_id 成功")
+    cursor.close()
+    cnx.close()  
+
+# addRecTradeId(16, 'D20220517YrljSY')
+
+
+def getrecTradeId(orderId):
+    cnx = cnxpool.get_connection()
+    cursor = cnx.cursor()
+    query = ("SELECT rec_trade_id FROM user_order WHERE order_id = %s")
+    data_query=(orderId,)
+    cursor.execute(query, data_query)
+    data = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return data
+
+# a = getrecTradeId(16)
+# print(a[0])

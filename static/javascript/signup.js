@@ -9,11 +9,13 @@ function memberSignUp(e){
     // 從前端拿到input資料換成json格式
     const name = document.querySelector('input[name="name"]')
     const email = document.querySelector('input[name="email"]')
+    const phone = document.querySelector('input[name="phone"]')
     const password = document.querySelector('input[name="password"]')
 
     const data={
         'name' : name.value,
         'email': email.value,
+        'phone':phone.value,
         'password': password.value 
     };
 
@@ -30,7 +32,7 @@ function memberSignUp(e){
         if (data.error === true){
             document.querySelector('.status').innerText=data.message;
         } else {
-            document.querySelector('.status').innerText="註冊成功，請點選登入";
+            location.replace(`/card/${data.memberId}`); 
         }
     })
 

@@ -30,6 +30,9 @@ def login():
 def offer():
 	return render_template("offer.html")
 
+@app.route("/card/<id>")
+def signUpCrditCard(id):
+	return render_template("card.html")
 
 @app.route("/signup")
 def signup():
@@ -42,6 +45,10 @@ def booking():
 @app.route("/order/<id>")
 def order(id):
 	return render_template("order.html")
+
+@app.route("/thankyou/<id>")
+def thankyou(id):
+	return render_template("thankyou.html")
 
 
 # 開發

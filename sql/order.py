@@ -26,6 +26,7 @@ TABLES['user_order'] = (
     "  `parking_space_id` INT NOT NULL,"
     "  `time_start` VARCHAR(255) DEFAULT '',"
     "  `time_end` VARCHAR(255) DEFAULT '',"
+    "  `rec_trade_id` VARCHAR(255),"
     "  PRIMARY KEY (`order_id`),"
     "  FOREIGN KEY (`member_id`) REFERENCES member (`id`),"
     "  FOREIGN KEY (`parking_space_id`) REFERENCES supply (`parking_space_id`)"

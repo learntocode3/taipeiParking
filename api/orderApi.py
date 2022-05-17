@@ -4,6 +4,10 @@ import json
 from api.gps import getGPS, getDistance
 import api.apiModel as sql
 from datetime import datetime
+import requests
+import sys
+sys.path.append('./')
+from settings import PARTNER_KEY
 
 
 orderAPI = Blueprint('order api', __name__)
@@ -53,13 +57,71 @@ def finishOrder():
     finish_time = datetime.strptime(finish_time,'%H:%M')
 
     UsageMinutes =  finish_time - startTime
-    UsageMinutes = UsageMinutes.total_seconds()/60.0
+    UsageMinutes = int(UsageMinutes.total_seconds()/60.0)
 
     print(UsageMinutes, type(UsageMinutes))
 
+    #結帳
+    card = sql.getCardSecret(user_id)
+    card_token = card[0]
+    card_key = card[1]
+
+    tappay_url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-token'
+    prime = {
+        "card_key": card_key,
+        "card_token": card_token,
+        "partner_key": PARTNER_KEY,
+        "currency": "TWD",
+        "merchant_id": "leontien2008_ESUN",
+        "details":"TapPay Test",
+        "amount": UsageMinutes
+    }
+            
+    header = {
+        'Content-Type': 'application/json',
+        'x-api-key': PARTNER_KEY
+    }       
+        
+    body = json.dumps(prime)
+
+    req = requests.post(tappay_url, data=body, headers=header)
+    userPayResult = req.json()
+    print(userPayResult)
+
+    status=userPayResult['status']
+    rec_trade_id=userPayResult['rec_trade_id']
+
+    sql.addRecTradeId(orderId, rec_trade_id)
+    if status == 0:
+        return {'data':"ok", "orderId":orderId}
+
+    return {'data':"card fail"}
 
 
 
+@orderAPI.route("/api/refund/order", methods=['POST'])
+def refundOrder():
+    req=request.get_json()
+    # print(req)
+    orderId=req['orderId']
+    rec_trade_id = sql.getrecTradeId(orderId)
 
+    tappay_url = 'https://sandbox.tappaysdk.com/tpc/transaction/refund'
+    prime = {
+        "partner_key": PARTNER_KEY,
+        "rec_trade_id": rec_trade_id[0]
+    }
+        
+        
+    header = {
+        'Content-Type': 'application/json',
+        'x-api-key': PARTNER_KEY
+    }       
+        
+    body = json.dumps(prime)
 
-    return {'data':"ok"}
+    req = requests.post(tappay_url, data=body, headers=header)
+    userPayResult = req.json()
+    print(userPayResult)
+
+    return {'data':'refundOk'}

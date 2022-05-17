@@ -22,6 +22,9 @@ TABLES['member'] = (
     "  `name` VARCHAR(255) NOT NULL,"
     "  `email` VARCHAR(255) NOT NULL,"
     "  `password` VARCHAR(255) NOT NULL,"
+    "  `phone` VARCHAR(255) NOT NULL,"
+    "  `card_token` VARCHAR(255),"
+    "  `card_key` VARCHAR(255),"
     "  PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
