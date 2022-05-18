@@ -60,3 +60,25 @@ section{
     padding: 10px 10px;
     border-radius: 4px;
 }
+
+@media(max-width:800px){
+    section{
+        width: 300px;
+    }
+    .findOrOffer{
+        width: 280px;
+    }
+    .findSpaceInput{
+        width: 280px;
+    }
+    .offerSpaceInput{
+        width: 280px;
+    }
+    .matchRightNow{
+        width: 280px;
+    }
+    .offerSpaceBtn{
+        width: 280px;
+    }
+
+}
