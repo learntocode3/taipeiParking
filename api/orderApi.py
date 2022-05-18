@@ -12,6 +12,7 @@ from settings import PARTNER_KEY
 
 orderAPI = Blueprint('order api', __name__)
 
+
 @orderAPI.route("/api/start/order", methods=['POST'])
 def getOrderData():
     #取得前端訂單資訊
@@ -43,13 +44,13 @@ def finishOrder():
     user_id = orderData[1] 
     spaceId=orderData[2]
     startTime=orderData[3]
-    print(startTime)
+    # print(startTime)
 
     # #車位恢復提供並新增結束時間到訂單
     sql.changeSpaceStatusToTrue(spaceId)
     now = datetime.now()
     finish_time = now.strftime("%H:%M")
-    print(finish_time)
+    # print(finish_time)
     sql.updateOrder(orderId, finish_time)
 
     #計算本次停車時數
@@ -59,7 +60,7 @@ def finishOrder():
     UsageMinutes =  finish_time - startTime
     UsageMinutes = int(UsageMinutes.total_seconds()/60.0)
 
-    print(UsageMinutes, type(UsageMinutes))
+    print("本次通車時間為：", UsageMinutes, type(UsageMinutes))
 
     #結帳
     card = sql.getCardSecret(user_id)
@@ -74,7 +75,7 @@ def finishOrder():
         "currency": "TWD",
         "merchant_id": "leontien2008_ESUN",
         "details":"TapPay Test",
-        "amount": UsageMinutes
+        "amount": UsageMinutes + 5
     }
             
     header = {

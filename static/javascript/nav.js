@@ -35,9 +35,12 @@ function statusCheck(){
     .then(res => res.json())
     .then(function(data){
         console.log(data.data)
+        console.log(data.orderid)
         if (data.data === null){
             alert('please login or sign up');
             location.replace("/login");
+        } else if(data.orderid !== null) {
+            location.replace(`/order/${data.orderid}`)
         } else {
             login.style.display='none';
             logOut.style.display='inline-block';
@@ -47,9 +50,27 @@ function statusCheck(){
     })
 }
 
+// function checkIfExistOrder(){
+//     fetch('/api/user')
+//     .then(res => res.json())
+//     .then(function(data){
+//         console.log(data.data)
+//         if (data.data === null){
+//             alert('please login or sign up');
+//             location.replace("/login");
+//         } else {
+//             login.style.display='none';
+//             logOut.style.display='inline-block';
+//             signup.style.display='none';
+//             member.style.display='inline-block'
+//         }
+//     })
+// }
+
+
 function logout(){
     fetch ('/api/user', {method:"DELETE"});
-    window.location.reload();
+    location.replace("/login");
 }
 
 // statusCheck();

@@ -35,7 +35,7 @@ def getUserInfo(name):
     user = cursor.fetchone()
     cursor.close()
     cnx.close()
-    return bool(user)
+    return user
     # data = {}
     # data['data'] = {}
     # if user:
@@ -43,6 +43,17 @@ def getUserInfo(name):
     #     data['data']['name'] = user[1]
     #     data['data']['email'] = user[2]
     #     return data
+
+def checkOrder(member_id):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("SELECT order_id FROM user_order WHERE member_id= %s AND time_end='' ")
+    data_query=(member_id,)
+    cursor.execute(query, data_query)
+    order = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+    return order
 
 #使用者登入
 def memberSignin(email, password):

@@ -1,5 +1,5 @@
 const availableList=document.querySelector('.availableList')
-
+statusCheck();
 getLatestUserSearch();
 
 function getLatestUserSearch(){

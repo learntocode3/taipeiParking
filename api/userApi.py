@@ -18,8 +18,15 @@ def checkUserStatus():
         data = sql.getUserInfo(session['name'])
         # print(data)
         # print(session['name'])
+        checkIfOrder = sql.checkOrder(data[0])
+        print(checkIfOrder)
+        if checkIfOrder:
+            id=checkIfOrder[0]
+        else:
+            id=None
+        #     return redirect(f'http://127.0.0.1:3000/order/{id}')
         if data:
-            return {"data": "ok"}
+            return {"data": "ok", "orderid":id}
         # return {"data": None}
     return {"data": None}
 
