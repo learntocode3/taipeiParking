@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 from mysql.connector import pooling
+from api.gps import getGPS, getDistance
 import sys
 sys.path.append('./')
 from settings import USER, PASSWORD
@@ -440,3 +441,34 @@ def getrecTradeId(orderId):
 
 # a = getrecTradeId(16)
 # print(a[0])
+
+# 用 1 小時內所有的搜尊資料來計算熱門程度
+def getPop(supplyAddress):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("select * from search_data where search_time > now() - interval 1 hour")
+    cursor.execute(query,)
+    searchDataWithin1Hour = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    print("所有的搜尋紀錄：", searchDataWithin1Hour)
+    if searchDataWithin1Hour:
+    
+        # 計算（已經篩選完可以提供的車位）跟 （一小時以內被搜尋的地址們）的距離 
+
+        toleranceDistance = 1 # 1km 為可接受的距離
+        popularity = 0
+        for i in range(len(searchDataWithin1Hour)):
+            demand = getGPS(searchDataWithin1Hour[i][1])
+            supply = getGPS(supplyAddress)
+            dist = getDistance(supply[0], supply[1], demand[0], demand[1])
+
+            if dist <= toleranceDistance:
+                popularity += 1
+        print("###Popularity: ", popularity)        
+        return popularity
+    print("###Popularity: ", 0) 
+    return 0
+
+# a = getPop('基隆路一段380巷14號')
+# print(a)

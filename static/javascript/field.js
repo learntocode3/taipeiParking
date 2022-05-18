@@ -106,6 +106,7 @@ function onSubmit(event) {
                 location.replace('/login');
             }
         })
+        btn.removeEventListener('click',onSubmit)
 
         
     })

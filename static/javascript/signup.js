@@ -35,5 +35,6 @@ function memberSignUp(e){
             location.replace(`/card/${data.memberId}`); 
         }
     })
+    signUp.removeEventListener('click', memberSignUp)
 
 }

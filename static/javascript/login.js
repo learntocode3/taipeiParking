@@ -6,6 +6,7 @@ signIn.addEventListener('click', memberSignin)
 
 function memberSignin(e){
     e.preventDefault;
+    console.log(1)
     // 從前端拿到input資料換成json格式
     const email = document.querySelector('input[name="email"]')
     const password = document.querySelector('input[name="password"]')
@@ -29,5 +30,6 @@ function memberSignin(e){
             document.querySelector('.status').innerText='登入失敗，請註冊';
         }
     })
+    signIn.removeEventListener('click', memberSignin)
 
 }
