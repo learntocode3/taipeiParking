@@ -31,7 +31,7 @@ function getLatestUserSearch(){
             book.innerText=" 開始預約 ";
 
             book.addEventListener("click", function(){
-                console.log(i)
+                //console.log(i)
                 orderData={
                     "spaceId":data.data[i][0]
                 }

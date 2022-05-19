@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <link rel= "stylesheet" type="text/css" href="/static/css/index.css">
+    <style>
+        .text{
+            display: flex;
+            justify-content: center;
+        }
+        .spaceList{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .item{
+            display: flex;
+            margin-top: 10px;
+            flex-direction: column;
+            border: 1px solid rgb(179, 175, 175);
+            border-radius: 5px;
+            width: 60%;
+            align-items: center;
+            padding: 10px;
+        }
+        button{
+            width: 220px;
+            color: white;
+            background-color: rgb(91, 91, 227);
+            border: none;
+            padding: 5px 0px;
+            border-radius: 6px;
+        }
+    </style>
+    <title>Taipei Parking</title>
+</head>
+<body>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+                <div class="member">會員</div>
+            </div>
+        </div>
+    </nav>
+    <div class="text">
+        <div>請選擇要修改的車位</div>
+    </div>
+
+    <div class="spaceList"></div>
+
+
+ 
+    <script src="/static/javascript/nav.js"></script>
+    <script>
+        getOfferList();
+        const offerList=document.querySelector('.spaceList')
+        
+        function getOfferList(){
+            fetch('/get/supply')
+            .then(res => res.json())
+            .then(function(data){
+                console.log(data.data)
+                for (let i=0; i<data.data.length; i++){
+                    const item=document.createElement('div')
+                    item.classList.add("item")
+                
+                    const place=document.createElement('div')
+                    place.innerText = data.data[i][2]
+                
+                    const address=document.createElement('div')
+                    address.innerText=data.data[i][3]
+
+                    const number=document.createElement("div")
+                    number.innerText= "車位號碼" + data.data[i][4]
+                
+                    const fee=document.createElement("div")
+                    fee.innerText= data.data[i][7] + "/hr"
+                
+                    const alter=document.createElement("button")
+                    alter.innerText= " 修改資料 ";
+
+                    alter.addEventListener('click', function(){
+                        location.replace(`/alter/${data.data[i][1]}`);
+                    })
+
+                    item.appendChild(place);
+                    item.appendChild(address);
+                    item.appendChild(number);
+                    item.appendChild(fee);
+                    item.appendChild(alter);
+                    offerList.appendChild(item)
+
+                }
+                
+            })
+        }
+    </script>
+</body>
+</html>

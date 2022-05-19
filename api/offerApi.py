@@ -45,3 +45,26 @@ def insertOffer():
     return {'data':'ok'}
 
 
+@offerAPI.route("/update/offer", methods=['POST'])
+def updateOffer():
+    req=request.get_json()
+    print(req)
+    spaceId=req['spaceId']
+    newPrice=req['price']
+    newStart1=req['time']['section-1-start']
+    newEnd1=req['time']['section-1-end']
+    newStart2=req['time']['section-2-start']
+    newEnd2=req['time']['section-2-end']
+    newStart3=req['time']['section-3-start']
+    newEnd3=req['time']['section-3-end']
+    if newPrice != "":
+        sql.updateSupplyPrice(spaceId, newPrice)
+    sql.updateSupplyTime(spaceId, newStart1, newEnd1, newStart2, newEnd2, newStart3, newEnd3)
+    return {'data':'ok'}
+
+@offerAPI.route("/get/supply", methods=['GET'])
+def getSupply():
+    space_onwer_id = sql.getIdBySessionName(session['name'])[0]
+    supplyList = sql.getSupplyList(space_onwer_id)
+    print(supplyList)
+    return {'data':supplyList}

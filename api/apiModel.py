@@ -483,3 +483,39 @@ def getPop(supplyAddress):
 
 # a = getPop('基隆路一段380巷14號')
 # print(a)
+
+
+def getSupplyList(space_onwer_id):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("select * from supply where space_onwer_id= %s ")
+    data_query=(space_onwer_id,)
+    cursor.execute(query, data_query)
+    data = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return data
+
+def updateSupplyPrice(spaceId, newPrice):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    # cnx = cnxpool.get_connection()
+    # cursor = cnx.cursor()
+    change_status = ("UPDATE supply SET price_per_hour=%s WHERE parking_space_id= %s")
+    price_data = (newPrice, spaceId)
+    cursor.execute(change_status, price_data)
+    cnx.commit()
+    print("更改價錢成功")
+    cursor.close()
+    cnx.close()  
+
+def updateSupplyTime(spaceId, newStart1, newEnd1, newStart2, newEnd2, newStart3, newEnd3):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    change_status = ("UPDATE supply_timetable SET time_1_start = %s, time_1_end = %s, time_2_start = %s, time_2_end = %s, time_3_start = %s, time_3_end = %s WHERE parking_space_id= %s")
+    time_data = (newStart1, newEnd1, newStart2, newEnd2, newStart3, newEnd3, spaceId)
+    cursor.execute(change_status, time_data)
+    cnx.commit()
+    print("更改時間成功")
+    cursor.close()
+    cnx.close()  

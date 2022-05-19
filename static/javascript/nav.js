@@ -13,6 +13,7 @@ offerPlace.addEventListener('click', directToOfferPage)
 login.addEventListener('click', directToLogInPage)
 logOut.addEventListener('click', logout)
 signup.addEventListener('click', directToSignUpPage)
+member.addEventListener('click', directToMemberPage)
 
 function changetoRentNow(){
     window.location.replace('/');
@@ -28,6 +29,9 @@ function directToLogInPage(){
 }
 function directToSignUpPage(){
     window.location.replace('/signup');
+}
+function directToMemberPage(){
+    window.location.replace('/member');
 }
 
 function statusCheck(){

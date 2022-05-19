@@ -1,6 +1,6 @@
 let data;
 const orderId = document.URL.split("/").slice(-1)
-statusCheck();
+statusCheckForOrder();
 console.log(orderId[0])
 
 
@@ -27,7 +27,7 @@ finishBtn.addEventListener("click", function(){
     })
 })
 
-function statusCheck(){
+function statusCheckForOrder(){
     fetch('/api/user')
     .then(res => res.json())
     .then(function(data){

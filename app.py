@@ -42,6 +42,10 @@ def signup():
 def booking():
 	return render_template("booking.html")
 
+@app.route("/member")
+def member():
+	return render_template("member.html")
+
 @app.route("/order/<id>")
 def order(id):
 	return render_template("order.html")
@@ -50,11 +54,15 @@ def order(id):
 def thankyou(id):
 	return render_template("thankyou.html")
 
+@app.route("/alter/<id>")
+def alter(id):
+	return render_template("alter.html")
+
 
 # 開發
-# if __name__ == '__main__':
-#     app.run(port=3000, debug=True)
+if __name__ == '__main__':
+    app.run(port=3000, debug=True)
 
 # # 上線
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=3000)
+# if __name__ == '__main__':
+#     app.run(host="0.0.0.0", port=3000)
