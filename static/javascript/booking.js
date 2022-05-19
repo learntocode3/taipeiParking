@@ -25,7 +25,9 @@ function getLatestUserSearch(){
             remain.innerText="可以停到 " + data.data[i][2]
         
             const fee=document.createElement("div")
-            fee.innerText= data.data[i][5] + "/hr"
+            const finalPrice = Math.ceil(data.data[i][5])
+            console.log(finalPrice)
+            fee.innerText= finalPrice + "/hr"
         
             const book=document.createElement("button")
             book.innerText=" 開始預約 ";
@@ -33,7 +35,8 @@ function getLatestUserSearch(){
             book.addEventListener("click", function(){
                 //console.log(i)
                 orderData={
-                    "spaceId":data.data[i][0]
+                    "spaceId":data.data[i][0],
+                    "finalPrice": finalPrice
                 }
                 fetch('/api/start/order',{
                     method:'POST',

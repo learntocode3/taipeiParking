@@ -20,6 +20,7 @@ def getOrderData():
     print(req)
     user_id = sql.getIdBySessionName(session['name'])[0]
     spaceId=req['spaceId']
+    finalPrice=req['finalPrice']
 
     #將車位變更為使用中
     sql.changeSpaceStatusToFalse(spaceId)
@@ -28,22 +29,25 @@ def getOrderData():
     now = datetime.now()
     current_time = now.strftime("%H:%M")
     # print(current_time)
-    order_id = sql.insertOrder(user_id, spaceId, current_time)
+    order_id = sql.insertOrder(user_id, spaceId, current_time, finalPrice)
     return {'orderId':order_id[0],
             'spaceId':spaceId,
             'startTime':current_time,
+            'finalPrice':finalPrice,
             'status':"ok"
     }
 
 @orderAPI.route("/api/finish/order", methods=['POST'])
 def finishOrder():
     req=request.get_json()
-    # print(req)
+    # print("finish",req)
     orderId=req['orderId']
     orderData = sql.getOrderData(orderId)
+    print(orderData)
     user_id = orderData[1] 
     spaceId=orderData[2]
     startTime=orderData[3]
+    finalPricePerHour=orderData[6]
     # print(startTime)
 
     # #車位恢復提供並新增結束時間到訂單
@@ -59,8 +63,10 @@ def finishOrder():
 
     UsageMinutes =  finish_time - startTime
     UsageMinutes = int(UsageMinutes.total_seconds()/60.0)
+    finalPrice = int((UsageMinutes*finalPricePerHour)/60)
 
     print("本次通車時間為：", UsageMinutes, type(UsageMinutes))
+    print("本次每分鐘收費為：", finalPrice, type(UsageMinutes))
 
     #結帳
     card = sql.getCardSecret(user_id)
@@ -75,7 +81,7 @@ def finishOrder():
         "currency": "TWD",
         "merchant_id": "leontien2008_ESUN",
         "details":"TapPay Test",
-        "amount": UsageMinutes + 5
+        "amount": finalPrice + 5
     }
             
     header = {

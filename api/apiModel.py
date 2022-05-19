@@ -319,14 +319,14 @@ def getSearchData(user_id):
 # print(a)
 
 
-def insertOrder(user_id, spaceId, current_time):
+def insertOrder(user_id, spaceId, current_time, final_price):
     cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
     # cnx = cnxpool.get_connection()
     # cursor = cnx.cursor()
-    add_order = ("INSERT INTO user_order (member_id, parking_space_id, time_start)"
-                  "VALUES (%s, %s, %s)")
-    data_order = (user_id, spaceId, current_time)
+    add_order = ("INSERT INTO user_order (member_id, parking_space_id, time_start, final_price)"
+                  "VALUES (%s, %s, %s, %s)")
+    data_order = (user_id, spaceId, current_time, final_price)
     cursor.execute(add_order, data_order)
     cnx.commit()
     print("order 新增成功")
