@@ -12,6 +12,7 @@ function sendSearchPlace(e){
         "start": document.getElementById('start').value,
         "end": document.getElementById('end').value,
     }
+    document.querySelector('.mask').style.display = "block";
     console.log(searchData)
     fetch('/api/booking',{
             method:'POST',
@@ -25,6 +26,7 @@ function sendSearchPlace(e){
         .then(function(data){
             console.log(data.data)
             if (data.data === "ok"){
+                document.querySelector('.mask').style.display = "none";
                 window.location.replace('/booking')
             }
             

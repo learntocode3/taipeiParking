@@ -3,6 +3,7 @@ statusCheck();
 getLatestUserSearch();
 
 function getLatestUserSearch(){
+    document.querySelector('.mask').style.display = "block";
     fetch('/api/booking')
     .then(res => res.json())
     .then(function(data){
@@ -30,7 +31,7 @@ function getLatestUserSearch(){
             fee.innerText= finalPrice + "/hr"
         
             const book=document.createElement("button")
-            book.innerText=" 開始預約 ";
+            book.innerText=" 開始保留車位 ";
 
             book.addEventListener("click", function(){
                 //console.log(i)
@@ -61,8 +62,9 @@ function getLatestUserSearch(){
             item.appendChild(book)
         
             availableList.appendChild(item)
+            
         
-        }
+        }document.querySelector('.mask').style.display = "none";
 
     })
 }
