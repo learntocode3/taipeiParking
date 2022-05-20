@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel= "stylesheet" type="text/css" href="/static/css/booking.css">
     <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <style>
+        #preloader{
+            position:fixed
+        }
+    </style>
 
     <title>Booking</title>
 </head>
@@ -24,11 +29,18 @@
         </div>
     </nav>
 
-
+    <div id="preloader"> 運算中 </div>
     <div class="availableList"></div> 
 
+    <script>
+        const loader=document.getElementById("preloader");
 
+        window.addEventListener('load', function(){
+            loader.style.display = "none";
+        })
+    </script>
     <script src="/static/javascript/nav.js"></script>
     <script src="/static/javascript/booking.js"></script>
+
 </body>
 </html>
