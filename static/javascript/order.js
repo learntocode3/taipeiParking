@@ -1,6 +1,8 @@
 let data;
 const orderId = document.URL.split("/").slice(-1)
+const currentAccumulateFee = document.querySelector('.currentAccumulateFee')
 statusCheckForOrder();
+renderOrderData();
 console.log(orderId[0])
 
 
@@ -43,4 +45,22 @@ function statusCheckForOrder(){
             member.style.display='inline-block'
         }
     })
+}
+
+function renderOrderData(){
+    orderData={'orderId':orderId[0]}
+    fetch('/api/render/order',{
+        method:'POST',
+        body:JSON.stringify(orderData),
+        headers: new Headers({
+            "content-type":"application/json"
+        })
+    })
+    .then(res => res.json())
+    .then(function(data){
+        console.log("current accumulate Price : " + data.finalPrice)
+        currentAccumulateFee.innerText = "目前累積費用為 "+ data.finalPrice + " 元"
+
+    })
+
 }

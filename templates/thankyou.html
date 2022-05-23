@@ -19,6 +19,33 @@
             padding: 5px 0px;
             border-radius: 6px;
         }
+        .feedBack{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgb(179, 175, 175);
+            margin-bottom: 15px;
+            margin-top: 10px;
+            padding: 15px 20px;
+        }
+        .Q1{
+            font-weight: 500;
+        }
+        .Q2{
+            font-size: 12px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .feedBackLink{
+            width: 150px;
+            color: white;
+            background-color: black;
+            border: none;
+            padding: 5px 0px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+        }
     </style>
     <title>Thank you</title>
 </head>
@@ -39,13 +66,26 @@
 
     <div class="all">
         <div class="record"></div>
-        <a href="/" style="margin:10px;">回首頁</a>
+        <div class="feedBack">
+            <div class="Q1">您對這份訂單的評價如何？</div>
+            <div class="Q2">請為您的訂購體驗評分，協助我們推薦更適合的車位。</div>
+            <div class="feedBackLink">前往評分</div>
+            <a href="/" style="margin:10px;">以後再說，先回首頁</a>
+        </div>
         <button id="refundBtn">車位有狀況，及時退款</button>
     </div>
 
 <script src="/static/javascript/nav.js"></script>
 <script>
     const orderId = document.URL.split("/").slice(-1)
+    const feedBackLink=document.querySelector('.feedBackLink')
+    feedBackLink.addEventListener('click', directToFeedbBack)
+
+    function directToFeedbBack(){
+        window.location.replace('/feedBack');
+    }
+
+
 
     //console.log(orderId[0])
     const record=document.querySelector('.record')

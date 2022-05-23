@@ -13,6 +13,27 @@ from settings import PARTNER_KEY
 orderAPI = Blueprint('order api', __name__)
 
 
+@orderAPI.route("/api/render/order", methods=['POST'])
+def renderOrderData():
+    req=request.get_json()
+    # print("finish",req)
+    orderId=req['orderId']
+    orderData = sql.getOrderData(orderId)
+    startTime=orderData[3]
+    finalPricePerHour=orderData[6]
+    now = datetime.now()
+    upToTime = now.strftime("%H:%M")
+
+    startTime = datetime.strptime(startTime,'%H:%M')
+    finish_time = datetime.strptime(upToTime,'%H:%M')
+
+    UsageMinutes =  finish_time - startTime
+    UsageMinutes = int(UsageMinutes.total_seconds()/60.0)
+    finalPrice = int((UsageMinutes*finalPricePerHour)/60)
+    return {'finalPrice':finalPrice}
+
+
+
 @orderAPI.route("/api/start/order", methods=['POST'])
 def getOrderData():
     #取得前端訂單資訊
