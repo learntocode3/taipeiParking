@@ -31,7 +31,8 @@ def checkUserStatus():
         #     return redirect(f'http://127.0.0.1:3000/order/{id}')
         #-----------------------------------------------------------------
         if data:
-            return {"data": "ok", 'member_id':data[0]} #, "orderid":id}
+            print(data[0])
+            return {"data": "ok", 'memberId':data[0]} #, "orderid":id}
         # return {"data": None}
     return {"data": None}
 

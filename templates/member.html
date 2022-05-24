@@ -53,15 +53,15 @@
  
     <script src="/static/javascript/nav.js"></script>
     <script>
+        statusCheck();
 
         const offerList=document.querySelector('.spaceList');
         const orderList=document.querySelector('.orderList');
         const unfinishedList=document.querySelector('.unfinished-list');
         const finishedList=document.querySelector('.finished-list');
         const changeCredit=document.querySelector('.changeCredit');
+       
         let orderOffset = 0;
-
-        statusCheck();
 
         const updateSpace=document.querySelector('.updateSpace')
         const allOrder=document.querySelector('.allOrder')
@@ -71,11 +71,19 @@
         changeCredit.addEventListener('click', directToChangeCredit)
 
         function directToChangeCredit(){
-            location.replace(`/card/${member_id}`);
+            fetch('/api/user')
+            .then(res => res.json())
+            .then(function(data){
+                location.replace(`/card/${data.memberId}`);
+            })
+            
         }
 
 
         function getOfferList(){
+            document.querySelector('.orderList').style.display = "none";
+            document.querySelector('.spaceList').innerHTML = "";
+            document.querySelector('.spaceList').style.display = "flex";
             fetch('/get/supply')
             .then(res => res.json())
             .then(function(data){
@@ -117,11 +125,13 @@
 
         
         function getAllOrder(){
+            document.querySelector('.spaceList').style.display = "none";
             fetch('/api/allOrder'+'?orderOffset='+orderOffset)
             .then(res => res.json())
             .then(function(data){
                 console.log(data.unfinish)
                 console.log(data.finish)
+                //document.querySelector('.orderList').innerHTML = "";
                 document.querySelector('.orderList').style.display = "flex";
                 if (data.unfinish.length !== 0){
                     for(let i=0; i < data.unfinish.length; i++ ){
