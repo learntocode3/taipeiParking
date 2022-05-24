@@ -12,6 +12,33 @@ from settings import PARTNER_KEY
 
 orderAPI = Blueprint('order api', __name__)
 
+@orderAPI.route("/api/allOrder", methods=['GET'])
+def getAllOrder():
+    orderOffset = request.args.get('orderOffset','0')
+    orderOffset = int(orderOffset)
+    user_id = sql.getIdBySessionName(session['name'])[0]
+    # 設定offset
+    offset = 12 * orderOffset
+    orderData = sql.checkOrder(user_id, offset)
+    print('最新12筆訂單資料：', orderData)
+    finished = []
+    unfinished = []
+    for i in range(len(orderData)):
+        if orderData[i][4] == "":
+            unfinished.append((orderData[i][0], orderData[i][8], orderData[i][3], orderData[i][4], orderData[i][7]))
+        else:
+            finished.append((orderData[i][0], orderData[i][8], orderData[i][3], orderData[i][4], orderData[i][7]))
+    return {'unfinish':unfinished, 'finish':finished}
+
+
+
+
+@orderAPI.route("/api/feedback", methods=['POST'])
+def insertFeedBack():
+    req=request.get_json()
+    sql.insertToFeedBack(req['orderId'],req['comment'], req['star'])
+    return {'data':'ok'}
+
 
 @orderAPI.route("/api/render/order", methods=['POST'])
 def renderOrderData():
@@ -118,8 +145,9 @@ def finishOrder():
 
     status=userPayResult['status']
     rec_trade_id=userPayResult['rec_trade_id']
+    totalFee=userPayResult['amount']
 
-    sql.addRecTradeId(orderId, rec_trade_id)
+    sql.addRecTradeId(orderId, rec_trade_id, totalFee)
     if status == 0:
         return {'data':"ok", "orderId":orderId}
 

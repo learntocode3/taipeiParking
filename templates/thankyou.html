@@ -82,14 +82,14 @@
     feedBackLink.addEventListener('click', directToFeedbBack)
 
     function directToFeedbBack(){
-        window.location.replace('/feedBack');
+        window.location.replace(`/feedback/${orderId[0]}`);
     }
 
 
 
     //console.log(orderId[0])
     const record=document.querySelector('.record')
-    record.innerHTML="感謝您這次的消費，"+"這次的訂單編號："+orderId[0]
+    record.innerHTML="感謝您這次的消費，"+"這次的訂單編號："+ orderId[0]
 
     const refundBtn=document.querySelector('#refundBtn')
 

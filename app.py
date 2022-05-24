@@ -58,6 +58,10 @@ def thankyou(id):
 def alter(id):
 	return render_template("alter.html")
 
+@app.route("/feedback/<id>")
+def feedback(id):
+	return render_template("feedback.html")
+
 
 # 開發
 if __name__ == '__main__':

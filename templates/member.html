@@ -6,35 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
     <link rel= "stylesheet" type="text/css" href="/static/css/index.css">
-    <style>
-        .text{
-            display: flex;
-            justify-content: center;
-        }
-        .spaceList{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .item{
-            display: flex;
-            margin-top: 10px;
-            flex-direction: column;
-            border: 1px solid rgb(179, 175, 175);
-            border-radius: 5px;
-            width: 60%;
-            align-items: center;
-            padding: 10px;
-        }
-        button{
-            width: 220px;
-            color: white;
-            background-color: rgb(91, 91, 227);
-            border: none;
-            padding: 5px 0px;
-            border-radius: 6px;
-        }
-    </style>
+    <link rel= "stylesheet" type="text/css" href="/static/css/member.css">
     <title>Taipei Parking</title>
 </head>
 <body>
@@ -45,25 +17,64 @@
                 <div class="rentNow">找車位</div>
                 <div class="offerNow">供車位</div>
                 <div class="signIn">登入</div>
-                <div class="logOut">登出</div>
                 <div class="signUp">註冊</div>    
                 <div class="member">會員</div>
+                <div class="logOut">登出</div>
             </div>
         </div>
     </nav>
+
     <div class="text">
-        <div>請選擇要修改的車位</div>
+        <div class="updateSpace">
+            <div>修改車位</div>
+        </div>
+        <div class="allOrder">
+            <div>查看訂單</div>
+        </div>
+        <div class="changeCredit">
+            <div>更換卡片</div>
+        </div>
     </div>
 
     <div class="spaceList"></div>
+
+    <div class="orderList">
+        <div class="unfinished-header">
+            進行中的訂單：
+            <div class="unfinished-list"></div>
+        </div>
+        <div class="finished-header">
+            歷史訂單：
+            <div class="finished-list"></div>
+        </div>
+    </div>
 
 
  
     <script src="/static/javascript/nav.js"></script>
     <script>
-        getOfferList();
-        const offerList=document.querySelector('.spaceList')
+
+        const offerList=document.querySelector('.spaceList');
+        const orderList=document.querySelector('.orderList');
+        const unfinishedList=document.querySelector('.unfinished-list');
+        const finishedList=document.querySelector('.finished-list');
+        const changeCredit=document.querySelector('.changeCredit');
+        let orderOffset = 0;
+
+        statusCheck();
+
+        const updateSpace=document.querySelector('.updateSpace')
+        const allOrder=document.querySelector('.allOrder')
         
+        updateSpace.addEventListener('click', getOfferList)
+        allOrder.addEventListener('click', getAllOrder)
+        changeCredit.addEventListener('click', directToChangeCredit)
+
+        function directToChangeCredit(){
+            location.replace(`/card/${member_id}`);
+        }
+
+
         function getOfferList(){
             fetch('/get/supply')
             .then(res => res.json())
@@ -102,6 +113,79 @@
                 }
                 
             })
+        }
+
+        
+        function getAllOrder(){
+            fetch('/api/allOrder'+'?orderOffset='+orderOffset)
+            .then(res => res.json())
+            .then(function(data){
+                console.log(data.unfinish)
+                console.log(data.finish)
+                document.querySelector('.orderList').style.display = "flex";
+                if (data.unfinish.length !== 0){
+                    for(let i=0; i < data.unfinish.length; i++ ){
+                    
+                    const unfin=document.createElement('div')
+                    unfin.classList.add('unfin')
+
+                    const orderId = document.createElement('div')
+                    orderId.innerText = '訂單號碼：' + data.unfinish[i][0]
+
+                    const address = document.createElement('div')
+                    address.innerText = '停車地址：' + data.unfinish[i][1]
+
+                    const start = document.createElement('div')
+                    start.innerText = '開始時間：' + data.unfinish[i][2]
+
+                    const toOrderPage = document.createElement('a')
+                    toOrderPage.href = `/order/${data.unfinish[i][0]}`;
+                    toOrderPage.innerText = '前往訂單'
+
+
+                    unfin.appendChild(orderId)
+                    unfin.appendChild(address)
+                    unfin.appendChild(start)
+                    unfin.appendChild(toOrderPage)
+
+                    unfinishedList.appendChild(unfin)
+                    }
+
+                }
+
+
+                for(let i=0; i < data.finish.length; i++ ){
+                    
+                    const fin=document.createElement('div')
+                    fin.classList.add('fin')
+
+                    const orderId = document.createElement('div')
+                    orderId.innerText = '訂單號碼：' + data.finish[i][0]
+
+                    const address = document.createElement('div')
+                    address.innerText = '停車地址：' + data.finish[i][1]
+
+                    const start = document.createElement('div')
+                    start.innerText = '開始時間：' + data.finish[i][2]
+
+                    const end = document.createElement('div')
+                    end.innerText = '結束時間：' + data.finish[i][3]
+
+                    const fee = document.createElement('div')
+                    fee.innerText = '總共花費：' + data.finish[i][4]
+
+                    fin.appendChild(orderId)
+                    fin.appendChild(address)
+                    fin.appendChild(start)
+                    fin.appendChild(end)
+                    fin.appendChild(fee)
+                    finishedList.appendChild(fin)
+                }
+                
+                
+
+            })
+            orderOffset++;
         }
     </script>
 </body>

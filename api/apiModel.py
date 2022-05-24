@@ -44,13 +44,13 @@ def getUserInfo(name):
     #     data['data']['email'] = user[2]
     #     return data
 
-def checkOrder(member_id):
+def checkOrder(member_id, offset):
     cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    query = ("SELECT order_id FROM user_order WHERE member_id= %s AND time_end='' ")
-    data_query=(member_id,)
+    query = ("SELECT user_order.*, supply.parking_space_address from user_order Left join supply on user_order.parking_space_id=supply.parking_space_id WHERE member_id =%s ORDER BY order_id DESC limit 12 offset %s")
+    data_query=(member_id, offset)
     cursor.execute(query, data_query)
-    order = cursor.fetchone()
+    order = cursor.fetchall()
     cursor.close()
     cnx.close()
     return order
@@ -421,13 +421,13 @@ def getCardSecret(user_id):
 # a = getCardSecret(11)
 # print(a)
 
-def addRecTradeId(orderId, rec_trade_id):
+def addRecTradeId(orderId, rec_trade_id, totalFee):
     cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
     # cnx = cnxpool.get_connection()
     # cursor = cnx.cursor()
-    change_status = ("UPDATE user_order SET rec_trade_id=%s WHERE order_id= %s")
-    rec_trade_data = (rec_trade_id, orderId)
+    change_status = ("UPDATE user_order SET rec_trade_id=%s, total_fee=%s WHERE order_id= %s")
+    rec_trade_data = (rec_trade_id, totalFee, orderId)
     cursor.execute(change_status, rec_trade_data)
     cnx.commit()
     print("新增 rec_trade_id 成功")
@@ -519,3 +519,17 @@ def updateSupplyTime(spaceId, newStart1, newEnd1, newStart2, newEnd2, newStart3,
     print("更改時間成功")
     cursor.close()
     cnx.close()  
+
+
+
+def insertToFeedBack(order_id, comment, star):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    add_comment = ("INSERT INTO feedback (order_id, comment, star) "
+                  "VALUES (%s, %s, %s)")
+    data_comment = (order_id, comment, star)
+    cursor.execute(add_comment, data_comment)
+    cnx.commit()
+    print("feedback 新增成功")
+    cursor.close()
+    cnx.close()    

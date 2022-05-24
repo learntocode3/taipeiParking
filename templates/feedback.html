@@ -8,5 +8,70 @@
 </head>
 <body>
     <div>feedBack page</div>
+    <table>
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="s-1"></td>
+            <td><input type="checkbox" name="s-2"></td>
+            <td><input type="checkbox" name="s-3"></td>
+            <td><input type="checkbox" name="s-4"></td>
+            <td><input type="checkbox" name="s-5"></td>
+        </tr>
+    </table>
+    <label>評價：</label><input name="comment" placeholder="請輸入您的評價">
+    <button class="sendFeed">send</button>
+    <script>
+        const orderId = document.URL.split("/").slice(-1)
+        const sendFeed=document.querySelector(".sendFeed")
+
+        sendFeed.addEventListener('click', getValue)
+
+        function getValue(e){
+            e.preventDefault;
+            const s1=document.querySelector('input[name="s-1"]').checked
+            const s2=document.querySelector('input[name="s-2"]').checked
+            const s3=document.querySelector('input[name="s-3"]').checked
+            const s4=document.querySelector('input[name="s-4"]').checked
+            const s5=document.querySelector('input[name="s-5"]').checked
+            const comment = document.querySelector('input[name="comment"]').value
+            let stars = [s1, s2, s3, s4, s5]
+            let star;
+            for (let i=0; i<5; i++){
+                if (stars[i] === true){
+                    star=i+1
+                }
+            }
+            console.log(comment)
+            console.log(star)
+            feedBackData={
+                'orderId':orderId[0],
+                'comment':comment,
+                'star':star
+            }
+            fetch('/api/feedback',{
+                method:'POST',
+                body:JSON.stringify(feedBackData),
+                headers: new Headers({
+                    "content-type":"application/json"
+                })
+            })
+            .then(res => res.json())
+            .then(function(data){
+                alert('感謝您的回饋');
+                location.replace('/');
+
+            })
+        }
+
+
+
+        
+    </script>
 </body>
 </html>

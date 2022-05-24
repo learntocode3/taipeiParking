@@ -7,6 +7,7 @@ const signup = document.querySelector(".signUp")
 const logOut = document.querySelector(".logOut")
 const member = document.querySelector(".member")
 
+
 mainPage.addEventListener('click', directToMainPage)
 rentNow.addEventListener('click', changetoRentNow)
 offerPlace.addEventListener('click', directToOfferPage)
@@ -39,13 +40,13 @@ function statusCheck(){
     .then(res => res.json())
     .then(function(data){
         console.log(data.data)
-        console.log(data.orderid)
+        //console.log(data.orderid)
         if (data.data === null){
             alert('please login or sign up');
             location.replace("/login");
-        } else if(data.orderid !== null) {
+        } /*else if(data.orderid !== null) {
             location.replace(`/order/${data.orderid}`)
-        } else {
+        }*/ else {
             login.style.display='none';
             logOut.style.display='inline-block';
             signup.style.display='none';
