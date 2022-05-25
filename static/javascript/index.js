@@ -1,6 +1,7 @@
 // send request
 statusCheck();
 const rentNowBtn = document.querySelector(".matchRightNow")
+const userInputAddress=document.querySelector('input[name="willingAddress"]')
 
 rentNowBtn.addEventListener('click', sendSearchPlace)
 
@@ -34,4 +35,53 @@ function sendSearchPlace(e){
 
 }
 
+// get User current location
+const getCurrentLocation = document.querySelector('.getCurrentLocation');
+getCurrentLocation.addEventListener('click', getLocation)
+//getLocation();
 
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else { 
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  //console.log("Latitude: " + position.coords.latitude + 
+  //"Longitude: " + position.coords.longitude);
+  let loca = {'latitude':position.coords.latitude, 'longtitude':position.coords.longitude}
+  fetch('/api/getUserLocation',{
+    method:'POST',
+    body:JSON.stringify(loca),
+    headers: new Headers({
+        "content-type":"application/json"
+    })
+})
+  .then(res => res.json())
+  .then(function(data){
+      //console.log(data.data)
+      userInputAddress.defaultValue=data.data
+
+  })
+
+
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+        console.log("User denied the request for Geolocation.")
+      break;
+    case error.POSITION_UNAVAILABLE:
+        console.log("Location information is unavailable.")
+      break;
+    case error.TIMEOUT:
+        console.log("The request to get user location timed out.")
+      break;
+    case error.UNKNOWN_ERROR:
+        console.log("An unknown error occurred.")
+      break;
+  }
+}

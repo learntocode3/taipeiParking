@@ -16,7 +16,7 @@ userAPI = Blueprint("user api", __name__)
 def checkUserStatus():
     if "name" in session:
         data = sql.getUserInfo(session['name'])
-        print(data)
+        # print(data)
         # print(data)
         # print(session['name'])
         #--------------------------------------------

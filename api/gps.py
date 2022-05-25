@@ -31,6 +31,10 @@ def getDistance(lat1,long1,lat2,long2):
 # d = getDistance(25.0817187, 121.5930352,25.0803634, 121.5674973)
 # print(d)
 
+def reverseGeo(latitude, longtitude):
+    url= f"https://maps.googleapis.com/maps/api/geocode/json?latlng={latitude},{longtitude}&language=zh-TW&key={API}"
+    response = requests.get(url)
+    return response.json()
 
 
 # 用GOOGLE API 計算經緯度間的距離

@@ -40,6 +40,15 @@ section{
     flex-wrap: wrap;
     width: 500px;
 }
+.getCurrentLocation{
+    font-size: 14px;
+    width: 110px;
+    border: 1px solid rgb(179, 175, 175);
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 
 .matchRightNow{
     margin-top:40px;

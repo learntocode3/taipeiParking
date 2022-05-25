@@ -1,10 +1,18 @@
 from flask import Blueprint
 from flask import *
 import json
-from api.gps import getGPS, getDistance
+from api.gps import getGPS, getDistance, reverseGeo
 import api.apiModel as sql
 
 bookingAPI = Blueprint('booking api', __name__)
+
+@bookingAPI.route("/api/getUserLocation", methods=['POST'])
+def getUserLocation():
+    req=request.get_json()
+    # print(req)
+    address = reverseGeo(req['latitude'], req['longtitude'])
+    curAddress = address['results'][0]['formatted_address']
+    return {'data':curAddress}
 
 @bookingAPI.route("/api/booking", methods=['POST'])
 def insertSearch():
