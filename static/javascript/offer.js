@@ -1,11 +1,15 @@
 // Send Request
 statusCheck();
 const offerSpaceBtn = document.querySelector(".offerSpaceBtn")
+const iptFile=document.querySelector('#image')
+
 
 offerSpaceBtn.addEventListener('click', sendOfferPlace)
 
 function sendOfferPlace(e){
     e.preventDefault();
+
+    const picture=document.querySelector('input[name="image"]').files;
 
     const offerData={
         "address": document.querySelector('input[name="parking_space_address"]').value,
@@ -22,12 +26,17 @@ function sendOfferPlace(e){
         } 
 }
     console.log(offerData)
+    let aaa = JSON.stringify(offerData)
+    const formData=new FormData()
+    formData.append('supplyData', aaa);
+    formData.append('iptFile', picture[0])
+    console.log(formData)
     fetch('/api/offer',{
         method:'POST',
-        body:JSON.stringify(offerData),
-        headers: new Headers({
-            "content-type":"application/json"
-        })
+        body:formData, //JSON.stringify(formData),
+        // headers: new Headers({
+        //     "content-type":"application/json"
+        // })
     })
    
     .then(res => res.json())

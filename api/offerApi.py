@@ -5,12 +5,33 @@ import api.apiModel as sql
 # from api.apiModel import db_getIdBySessionName, db_insertToSupply, db_insertToSupplyStatus, db_insertToSupplyTimetable, db_checkIfSpaceNumberExist
 from api.gps import getGPS
 
+import sys
+sys.path.append('./')
+from settings import AWS_KEY_ID, AWS_SECRET_KEY
+
+import boto3
+
+s3 = boto3.client('s3',
+                   aws_access_key_id=AWS_KEY_ID,
+                   aws_secret_access_key=AWS_SECRET_KEY
+                )
+
+BUCKET_NAME='aws-test-for-term3'
+
 offerAPI = Blueprint('offer api', __name__)
 
 @offerAPI.route("/api/offer", methods=['POST'])
 def insertOffer():
-    req=request.get_json()
-    print(req)
+
+    supplyData=request.form['supplyData']
+    req = json.loads(supplyData)
+    print(type(supplyData), supplyData)
+
+    image= request.files['iptFile']
+    pictureName = image.filename
+    print(image)
+    print(pictureName)
+
     # print(session['name'])
     space_onwer_id = sql.getIdBySessionName(session['name'])[0]
     # print(space_onwer_id)

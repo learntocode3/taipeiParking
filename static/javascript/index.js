@@ -1,5 +1,6 @@
 // send request
 statusCheck();
+const mapTest = document.querySelector('.mapTest')
 const rentNowBtn = document.querySelector(".matchRightNow")
 const userInputAddress=document.querySelector('input[name="willingAddress"]')
 
@@ -62,8 +63,8 @@ function showPosition(position) {
   .then(res => res.json())
   .then(function(data){
       //console.log(data.data)
-      userInputAddress.defaultValue=data.data
-
+      userInputAddress.defaultValue=data.data;
+      //mapTest.setAttribute('src',`https://www.google.com/maps/embed/v1/place?q=${data.data}`);
   })
 
 
