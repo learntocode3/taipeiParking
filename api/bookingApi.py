@@ -44,7 +44,7 @@ def getMatchResult():
 
     #計算查詢座標之間的所有距離
     toleranceDistance = 1 # 1km 為可接受的距離
-    availableParkingInfo = [] # （車位id，幾點到幾點， 地址， 幾號車位，收費） 
+    availableParkingInfo = [] # （車位id，幾點到幾點， 地址， 幾號車位，收費，留言，評分） 
     for i in range(len(supplyGPS)):
         # print(allGPS[i][0],allGPS[i][1])
         
@@ -66,7 +66,10 @@ def getMatchResult():
                 supplyPrice = supplyAddressNamePrice[1]
                 supplySpaceNumber = supplyAddressNamePrice[2]
                 supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice))
-                supplyInfo = (parkingID, supplyStart1, supplyEnd1, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist)
+                comment = sql.getComment(parkingID)
+                message = [ ele[0] for ele in comment ]
+                stars = [ ele[1] for ele in comment ]
+                supplyInfo = (parkingID, supplyStart1, supplyEnd1, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars)
                 availableParkingInfo.append(supplyInfo)
             
             if (supplyStart2 == "") and (supplyEnd2 == ""):
@@ -78,7 +81,10 @@ def getMatchResult():
                     supplyPrice = supplyAddressNamePrice[1]
                     supplySpaceNumber = supplyAddressNamePrice[2]
                     supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice))
-                    supplyInfo = (parkingID, supplyStart1, supplyEnd1, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist)
+                    comment = sql.getComment(parkingID)
+                    message = [ ele[0] for ele in comment ]
+                    stars = [ ele[1] for ele in comment ]
+                    supplyInfo = (parkingID, supplyStart2, supplyEnd2, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars)
                     availableParkingInfo.append(supplyInfo)
             
             if (supplyStart3 == "") and (supplyEnd3 == ""):
@@ -90,7 +96,10 @@ def getMatchResult():
                     supplyPrice = supplyAddressNamePrice[1]
                     supplySpaceNumber = supplyAddressNamePrice[2]
                     supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice))
-                    supplyInfo = (parkingID, supplyStart1, supplyEnd1, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist)
+                    comment = sql.getComment(parkingID)
+                    message = [ ele[0] for ele in comment ]
+                    stars = [ ele[1] for ele in comment ]
+                    supplyInfo = (parkingID, supplyStart3, supplyEnd3, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars)
                     availableParkingInfo.append(supplyInfo)
     
     print( "所有符合篩選條件的車位：", availableParkingInfo)

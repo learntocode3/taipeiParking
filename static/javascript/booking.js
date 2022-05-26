@@ -33,6 +33,29 @@ function getLatestUserSearch(){
             const book=document.createElement("button")
             book.innerText=" 開始保留車位 ";
 
+            const commentList = data.data[i][7]
+            const starList = data.data[i][8]
+            const message=document.createElement('div')
+            const average = (array) => array.reduce((a, b) => Number(a) + Number(b)) / array.length;
+            //console.log(average(starList)); 
+            if (commentList.length !== 0){                             
+                message.innerText = commentList.length + '則評價' + '    平均 ' + average(starList).toFixed(2) +' 顆星'
+            }
+
+            message.addEventListener('click', function(){
+                message.innerText = "";
+                //let fragment = document.createDocumentFragment()
+                for(let j=0; j < commentList.length; j++){
+                    let cmt = document.createElement('div')
+                    cmt.innerText = `評論${j+1}：` + commentList[j]
+                    //fragment.appendChild(commentList[j])
+                    message.appendChild(cmt)
+                }
+                
+            })
+
+
+
             book.addEventListener("click", function(){
                 //console.log(i)
                 orderData={
@@ -54,12 +77,19 @@ function getLatestUserSearch(){
                     }
                 })
             })
+
+            
+
+                      
+
+
         
             item.appendChild(place)
             item.appendChild(distance)
             item.appendChild(remain)
             item.appendChild(fee)
             item.appendChild(book)
+            item.appendChild(message)
         
             availableList.appendChild(item)
             

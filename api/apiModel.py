@@ -268,7 +268,17 @@ def getAddressNumPriceById(parkingID):
 
 # a = getAddressPriceById(7)
 # print(a)
-
+def getComment(parkingID):
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("select feedback.comment, feedback.star, user_order.parking_space_id from feedback left join user_order on feedback.order_id = user_order.order_id where parking_space_id = %s")
+    data_query=(parkingID, )
+    cursor.execute(query, data_query)
+    comment = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    print(comment)
+    return comment
 
 def insertToCheckSpaceNum(parking_space_id, parking_space_address, parking_space_number):
     cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
