@@ -30,7 +30,7 @@ function sendOfferPlace(e){
     const formData=new FormData()
     formData.append('supplyData', aaa);
     formData.append('iptFile', picture[0])
-    console.log(formData)
+    //console.log(formData)
     fetch('/api/offer',{
         method:'POST',
         body:formData, //JSON.stringify(formData),
@@ -48,9 +48,5 @@ function sendOfferPlace(e){
         }
         
     })
-
-
-
-
 
 }

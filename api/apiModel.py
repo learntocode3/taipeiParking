@@ -154,16 +154,16 @@ def getIdBySessionName(name):
         return user    
 
 #新增資料到supply
-def insertToSupply(space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour):
+def insertToSupply(space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour, parking_space_image):
     cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()    
     
     # cnx = cnxpool.get_connection()
     # cursor = cnx.cursor()
     add_supply = ("INSERT INTO supply "
-                  "(space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour) " 
-                  "VALUES (%s, %s, %s,%s, %s, %s, %s)")
-    data_supply = (space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour)
+                  "(space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour, parking_space_image) " 
+                  "VALUES (%s, %s, %s,%s, %s, %s, %s, %s)")
+    data_supply = (space_onwer_id, parking_space_name, parking_space_address,parking_space_number, longtitude, latitude,price_per_hour, parking_space_image)
     cursor.execute(add_supply, data_supply)
     cnx.commit()
     print("supply新增成功")
@@ -258,7 +258,7 @@ def getAddressNumPriceById(parkingID):
     cursor = cnx.cursor()
     # cnx = cnxpool.get_connection()
     # cursor = cnx.cursor()
-    query = ("SELECT parking_space_address, price_per_hour, parking_space_number  FROM supply WHERE parking_space_id = %s")
+    query = ("SELECT parking_space_address, price_per_hour, parking_space_number, parking_space_image FROM supply WHERE parking_space_id = %s")
     data_query=(parkingID, )
     cursor.execute(query, data_query)
     info = cursor.fetchone()

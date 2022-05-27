@@ -29,8 +29,9 @@ def insertOffer():
 
     image= request.files['iptFile']
     pictureName = image.filename
-    print(image)
+    print(image, type(image))
     print(pictureName)
+    parking_space_image = f'https://d1omjlgso6gyhl.cloudfront.net/{pictureName}'
 
     # print(session['name'])
     space_onwer_id = sql.getIdBySessionName(session['name'])[0]
@@ -57,8 +58,13 @@ def insertOffer():
     if isExist:
         return {"data": "車位號碼已經存在"}
 
+    #上傳到s3
+    # s3.upload_file(picturePath, BUCKET_NAME, pictureName)
+    s3.upload_fileobj(image, BUCKET_NAME, pictureName)
+    print('success saved the image to S3')    
+    
     #新增資料到四個表
-    id = sql.insertToSupply(space_onwer_id, parking_space_name, parking_space_address, parking_space_number, longtitude, latitude, price_per_hour)
+    id = sql.insertToSupply(space_onwer_id, parking_space_name, parking_space_address, parking_space_number, longtitude, latitude, price_per_hour, parking_space_image)
     # print(id)
     sql.insertToCheckSpaceNum(id[0], parking_space_address, parking_space_number)
     sql.insertToSupplyStatus(id[0], "true")
