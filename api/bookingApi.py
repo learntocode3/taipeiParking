@@ -6,6 +6,11 @@ import api.apiModel as sql
 
 bookingAPI = Blueprint('booking api', __name__)
 
+@bookingAPI.route("/api/available", methods=['GET'])
+def getAvailable():
+    availableData = sql.getAvailable()
+    return {'availableData':availableData}
+
 @bookingAPI.route("/api/getUserLocation", methods=['POST'])
 def getUserLocation():
     req=request.get_json()

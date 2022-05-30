@@ -543,3 +543,15 @@ def insertToFeedBack(order_id, comment, star):
     print("feedback 新增成功")
     cursor.close()
     cnx.close()    
+
+
+
+def getAvailable():
+    cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("select supply.parking_space_address, supply_status.space_status from supply inner join supply_status on supply.parking_space_id = supply_status.parking_space_id where supply_status.space_status = 'true'")
+    cursor.execute(query,)
+    allAvailable = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return allAvailable

@@ -15,6 +15,7 @@ userAPI = Blueprint("user api", __name__)
 @userAPI.route("/api/user", methods=["GET"])
 def checkUserStatus():
     if "name" in session:
+        print("##########",session['name'])
         data = sql.getUserInfo(session['name'])
         # print(data)
         # print(data)
@@ -55,6 +56,7 @@ def signup():
 def signin():
     req = request.get_json()
     member = sql.memberSignin(req['email'], req['password'])
+    print(member)
     if member:
         session['name'] = member[1]
         return {"ok":True}
