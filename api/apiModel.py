@@ -480,8 +480,14 @@ def getPop(supplyAddress):
         toleranceDistance = 1 # 1km 為可接受的距離
         popularity = 0
         for i in range(len(searchDataWithin1Hour)):
+            # print(searchDataWithin1Hour)
+            # print("###################",i,"############",searchDataWithin1Hour[i][1])
             demand = getGPS(searchDataWithin1Hour[i][1])
+            if demand == False:
+                continue 
             supply = getGPS(supplyAddress)
+            if supply == False:
+                continue
             dist = getDistance(supply[0], supply[1], demand[0], demand[1])
 
             if dist <= toleranceDistance:

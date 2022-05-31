@@ -20,9 +20,12 @@ function getLatestUserSearch(){
                 const image=document.createElement('img')
                 if (data.data[i][9] !== null){
                     image.src = data.data[i][9]
-                    image.style.width = '100%';
+                    image.style.width = '310px';
                 }
                 
+                const info=document.createElement('div')
+                info.classList = "info";
+
                 const place=document.createElement('div')
                 place.innerText = data.data[i][3]
             
@@ -31,9 +34,13 @@ function getLatestUserSearch(){
                 //console.log(km.toFixed(2))
                 distance.innerText="距離 "+ km.toFixed(2) + " km"
     
-            
                 const remain=document.createElement("div")
                 remain.innerText="可以停到 " + data.data[i][2]
+
+                info.appendChild(place)
+                info.appendChild(distance)
+                info.appendChild(remain)
+
             
                 const fee=document.createElement("div")
                 const finalPrice = Math.ceil(data.data[i][5])
@@ -46,6 +53,7 @@ function getLatestUserSearch(){
                 const commentList = data.data[i][7]
                 const starList = data.data[i][8]
                 const message=document.createElement('div')
+                message.classList = "comment"
                 const average = (array) => array.reduce((a, b) => Number(a) + Number(b)) / array.length;
                 //console.log(average(starList)); 
                 if (commentList.length !== 0){                             
@@ -91,17 +99,24 @@ function getLatestUserSearch(){
                 
     
                           
-    
-    
+                const checkOut=document.createElement('div')
+                checkOut.classList = "checkout"
+                checkOut.appendChild(fee)
+                checkOut.appendChild(book)
+                
                 item.appendChild(image)
-                item.appendChild(place)
-                item.appendChild(distance)
-                item.appendChild(remain)
-                item.appendChild(fee)
-                item.appendChild(book)
-                item.appendChild(message)
-            
-                availableList.appendChild(item)
+                item.appendChild(info)
+                item.appendChild(checkOut)
+                ///item.appendChild(message)
+                
+                const combine=document.createElement('div')
+                combine.appendChild(item)
+                combine.appendChild(message)
+                combine.classList = 'combine'
+                
+                availableList.appendChild(combine)
+                // availableList.appendChild(item)
+                // availableList.appendChild(message)
                 
             
             }document.querySelector('.mask').style.display = "none";

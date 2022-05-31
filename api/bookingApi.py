@@ -35,10 +35,14 @@ def insertSearch():
 @bookingAPI.route("/api/booking", methods=['GET'])           
 def getMatchResult():
     user_id = sql.getIdBySessionName(session['name'])[0]
-
     data = sql.getSearchData(user_id)
+
+    availableParkingInfo = [] # （車位id，幾點到幾點， 地址， 幾號車位，收費，留言，評分，圖片連結） 
+
     demandAddress = data[1] #req['address']
     demandGps = getGPS(demandAddress)
+    if demandGps == False:
+        return {"data":availableParkingInfo}
     demandPrice = data[2] #req['price']
     demandStart = data[3] #req['start']
     demandEnd = data[4] #req['end']
@@ -49,7 +53,7 @@ def getMatchResult():
 
     #計算查詢座標之間的所有距離
     toleranceDistance = 1 # 1km 為可接受的距離
-    availableParkingInfo = [] # （車位id，幾點到幾點， 地址， 幾號車位，收費，留言，評分，圖片連結） 
+
     for i in range(len(supplyGPS)):
         # print(allGPS[i][0],allGPS[i][1])
         
@@ -119,7 +123,7 @@ supplyDict = {}
 
 def getAdjustPrice(supplyAddress, base_price):
     if supplyAddress in supplyDict:
-        print(supplyDict)
+        print("被存入紀錄 popularity 的字典:", supplyDict)
         popularity = supplyDict[supplyAddress]
     else:
         popularity = sql.getPop(supplyAddress)

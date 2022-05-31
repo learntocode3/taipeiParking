@@ -93,5 +93,5 @@ def updateOffer():
 def getSupply():
     space_onwer_id = sql.getIdBySessionName(session['name'])[0]
     supplyList = sql.getSupplyList(space_onwer_id)
-    print(supplyList)
+    print('這位會員所提供的所有車位：',supplyList)
     return {'data':supplyList}
