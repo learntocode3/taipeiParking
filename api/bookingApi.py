@@ -4,6 +4,7 @@ import json
 from api.gps import getGPS, getDistance, reverseGeo
 import api.apiModel as sql
 
+
 bookingAPI = Blueprint('booking api', __name__)
 
 @bookingAPI.route("/api/available", methods=['GET'])

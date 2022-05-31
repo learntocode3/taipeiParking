@@ -4,6 +4,7 @@ from api.bookingApi import bookingAPI
 from api.offerApi import offerAPI
 from api.userApi import userAPI
 from api.orderApi import orderAPI
+from api.middleware import middleware
 
 app=Flask(__name__)
 app.register_blueprint(bookingAPI)
@@ -62,7 +63,9 @@ def alter(id):
 def feedback(id):
 	return render_template("feedback.html")
 
+
 @app.route("/available")
+@middleware
 def available():
 	return render_template("available.html")
 
