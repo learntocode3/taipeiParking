@@ -30,7 +30,7 @@ def insertOffer():
     image= request.files['iptFile']
     pictureName = image.filename
     print(image, type(image))
-    print(pictureName)
+    print('圖檔名稱：', pictureName)
     parking_space_image = f'https://d1omjlgso6gyhl.cloudfront.net/{pictureName}'
 
     # print(session['name'])
