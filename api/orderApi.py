@@ -71,6 +71,7 @@ def getOrderData():
     finalPrice=req['finalPrice']
 
     #將車位變更為使用中
+    #check if ture for update
     sql.changeSpaceStatusToFalse(spaceId)
     
     #輸入使用者開始使用時間並取得訂單編號

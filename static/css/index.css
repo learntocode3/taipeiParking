@@ -50,7 +50,10 @@ section{
     text-align: center;
     margin-bottom: 10px;
 }
-
+.getCurrentLocation:hover{
+    background-color: gray;
+    color: azure;
+}
 
 .matchRightNow{
     margin-top:40px;

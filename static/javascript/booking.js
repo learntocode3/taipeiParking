@@ -41,6 +41,12 @@ function getLatestUserSearch(){
                 info.appendChild(distance)
                 info.appendChild(remain)
 
+
+                const avgTenOrder = document.createElement("div")
+                if (data.data[i][10] !== null){
+                    avgTenOrder.innerText = "過去10筆訂單平均成交價為" + data.data[i][10];
+                }
+                
             
                 const fee=document.createElement("div")
                 const finalPrice = Math.ceil(data.data[i][5])
@@ -101,6 +107,7 @@ function getLatestUserSearch(){
                           
                 const checkOut=document.createElement('div')
                 checkOut.classList = "checkout"
+                checkOut.appendChild(avgTenOrder)
                 checkOut.appendChild(fee)
                 checkOut.appendChild(book)
                 

@@ -473,12 +473,13 @@ def getPop(supplyAddress):
     cursor.close()
     cnx.close()
     print("所有的搜尋紀錄：", searchDataWithin1Hour)
+    # print("第五個：", searchDataWithin1Hour[0][5])
     if searchDataWithin1Hour:
     
         # 計算（已經篩選完可以提供的車位）跟 （一小時以內被搜尋的地址們）的距離 
 
         toleranceDistance = 1 # 1km 為可接受的距離
-        popularity = 0
+        popularity = []
         for i in range(len(searchDataWithin1Hour)):
             # print(searchDataWithin1Hour)
             # print("###################",i,"############",searchDataWithin1Hour[i][1])
@@ -491,13 +492,17 @@ def getPop(supplyAddress):
             dist = getDistance(supply[0], supply[1], demand[0], demand[1])
 
             if dist <= toleranceDistance:
-                popularity += 1
-        print("###Popularity: ", popularity)        
+                print("###Popularity: ", popularity)  
+                popularity.append([searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
+            else:
+                print(dist)
+                print('not append into list',[searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
+        # print("###Popularity: ", popularity)        
         return popularity
-    print("###Popularity: ", 0) 
-    return 0
+    # print("###Popularity: ", 0) 
+    return []
 
-# a = getPop('基隆路一段380巷14號')
+# a = getPop('民權東路二段')
 # print(a)
 
 
@@ -561,3 +566,17 @@ def getAvailable():
     cursor.close()
     cnx.close()
     return allAvailable
+
+def getTenLastestOrderAveragePrice(parking_space_id):
+    cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("select avg(final_price) from user_order where parking_space_id= %s order by order_id desc limit 10")
+    data_query=(parking_space_id,)
+    cursor.execute(query, data_query)
+    data = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return data[0][0]
+
+# a = getTenLastestOrderAveragePrice(7)
+# print(a[0][0])

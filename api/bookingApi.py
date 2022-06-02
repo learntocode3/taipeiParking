@@ -3,6 +3,7 @@ from flask import *
 import json
 from api.gps import getGPS, getDistance, reverseGeo
 import api.apiModel as sql
+from datetime import datetime, timedelta
 
 
 bookingAPI = Blueprint('booking api', __name__)
@@ -50,16 +51,16 @@ def getMatchResult():
 
 
     #列出所有可以列出的資料
-    supplyGPS = sql.selectAllGps()
+    supplyGPS = sql.selectAllGps() 
 
     #計算查詢座標之間的所有距離
     toleranceDistance = 1 # 1km 為可接受的距離
 
-    for i in range(len(supplyGPS)):
+    for i in range(len(supplyGPS)): # O(n)
         # print(allGPS[i][0],allGPS[i][1])
         
 
-        dist = getDistance(supplyGPS[i][0], supplyGPS[i][1], demandGps[0], demandGps[1])
+        dist = getDistance(supplyGPS[i][0], supplyGPS[i][1], demandGps[0], demandGps[1]) 
         if dist <= toleranceDistance:
             parkingID = supplyGPS[i][2]
             supplyTime = sql.checkTime(parkingID)
@@ -76,11 +77,12 @@ def getMatchResult():
                 supplyPrice = supplyAddressNamePrice[1]
                 supplySpaceNumber = supplyAddressNamePrice[2]
                 supplySpaceImage = supplyAddressNamePrice[3]
-                supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice))
+                supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice), demandAddress)
                 comment = sql.getComment(parkingID)
                 message = [ ele[0] for ele in comment ]
                 stars = [ ele[1] for ele in comment ]
-                supplyInfo = (parkingID, supplyStart1, supplyEnd1, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars, supplySpaceImage)
+                lastTenOrdersAvg = sql.getTenLastestOrderAveragePrice(parkingID)
+                supplyInfo = (parkingID, supplyStart1, supplyEnd1, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars, supplySpaceImage, lastTenOrdersAvg)
                 availableParkingInfo.append(supplyInfo)
             
             if (supplyStart2 == "") and (supplyEnd2 == ""):
@@ -92,11 +94,12 @@ def getMatchResult():
                     supplyPrice = supplyAddressNamePrice[1]
                     supplySpaceNumber = supplyAddressNamePrice[2]
                     supplySpaceImage = supplyAddressNamePrice[3]
-                    supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice))
+                    supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice), demandAddress)
                     comment = sql.getComment(parkingID)
                     message = [ ele[0] for ele in comment ]
                     stars = [ ele[1] for ele in comment ]
-                    supplyInfo = (parkingID, supplyStart2, supplyEnd2, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars, supplySpaceImage)
+                    lastTenOrdersAvg = sql.getTenLastestOrderAveragePrice(parkingID)
+                    supplyInfo = (parkingID, supplyStart2, supplyEnd2, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars, supplySpaceImage, lastTenOrdersAvg)
                     availableParkingInfo.append(supplyInfo)
             
             if (supplyStart3 == "") and (supplyEnd3 == ""):
@@ -108,11 +111,12 @@ def getMatchResult():
                     supplyPrice = supplyAddressNamePrice[1]
                     supplySpaceNumber = supplyAddressNamePrice[2]
                     supplySpaceImage = supplyAddressNamePrice[3]
-                    supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice))
+                    supplyFinalPrice = getAdjustPrice(supplyAddress, int(supplyPrice), demandAddress)
                     comment = sql.getComment(parkingID)
                     message = [ ele[0] for ele in comment ]
                     stars = [ ele[1] for ele in comment ]
-                    supplyInfo = (parkingID, supplyStart3, supplyEnd3, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars, supplySpaceImage)
+                    lastTenOrdersAvg = sql.getTenLastestOrderAveragePrice(parkingID)
+                    supplyInfo = (parkingID, supplyStart3, supplyEnd3, supplyAddress, supplySpaceNumber ,supplyFinalPrice, dist, message, stars, supplySpaceImage, lastTenOrdersAvg)
                     availableParkingInfo.append(supplyInfo)
     
     print( "所有符合篩選條件的車位：", availableParkingInfo)
@@ -122,15 +126,36 @@ def getMatchResult():
 
 supplyDict = {} 
 
-def getAdjustPrice(supplyAddress, base_price):
+def getAdjustPrice(supplyAddress, base_price, demandAddress):
+    print('快取字典：',supplyDict)
     if supplyAddress in supplyDict:
+        print('有進入到快取')
+        nowTime=datetime.now() - timedelta(hours=8)
         print("被存入紀錄 popularity 的字典:", supplyDict)
         popularity = supplyDict[supplyAddress]
+        #現有的每一筆資料時間是否合理, clean
+        clean = [] # 只保留符合 1 小時內的資料
+        for i in range(len(supplyDict[supplyAddress])): 
+            timeDif = nowTime - supplyDict[supplyAddress][i][1]
+            minutes = timeDif.total_seconds() / 60
+            print('#跟現在的時間差：', minutes, '分鐘')
+            if minutes < 60:
+                print('大於60分鐘的資料：', supplyDict[supplyAddress][i])
+                # del supplyDict[supplyAddress][i]
+                # i -= 1
+                clean.append(supplyDict[supplyAddress][i])
+        supplyDict[supplyAddress] = clean
+        
+        #加入當前資料
+        supplyDict[supplyAddress].append([demandAddress, nowTime])
+        popularity = supplyDict[supplyAddress]
     else:
+        print('沒有進入到快取')
         popularity = sql.getPop(supplyAddress)
         supplyDict[supplyAddress] = popularity
     # print("###",popularity)
-    supplyPrice = computePrice(base_price, popularity)
+    print('拿進去computePrice的pop:',len(popularity))
+    supplyPrice = computePrice(base_price, len(popularity))
     return  supplyPrice
 
 def computePrice(base_price, popularity):
@@ -138,9 +163,6 @@ def computePrice(base_price, popularity):
     print("### 拿到popularity後經過運算得到的價錢：",supplyPrice)
     return supplyPrice
 
-
-# a = getAdjustPrice("基隆路一段380巷14號", 70)
-# print(a)
 
 #low
  
