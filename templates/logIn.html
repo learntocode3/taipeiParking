@@ -4,30 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <link rel= "stylesheet" type="text/css" href="/static/css/login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        section{
-            display:flex; 
-            flex-direction: column; 
-            align-items: center;
-        }
-        section > div{
-            margin-bottom: 10px;
-        }
-        section > input{
-            margin-bottom: 10px;
-            width: 280px;
-            height: 35px;
-        }
-        button{
-            width: 280px;
-            color: white;
-            background-color: rgb(91, 91, 227);
-            border: none;
-            padding: 10px 10px;
-            border-radius: 4px;
-        }
-    </style>
     <title>Sign In</title>
 </head>
 <body>
@@ -44,15 +22,29 @@
             </div>
         </div>
     </nav>
+    
+    <div class="firstPart">
+        <img src="/static/pic/mainPage.png">
+        <section>
+                <div>快來使用Ezpark吧！</div>
+                <input type="text" name="email" placeholder="請輸入信箱">
+                <input type="password" name="password" placeholder="請輸入密碼">
+                <div class="status"></div>     
+                <button class="memberSignIn">登入</button>
+        </section>
+    </div>
 
-    <section>
-        <div>Sign In</div>
-        <input type="text" name="email" placeholder="請輸入信箱">
-        <input type="password" name="password" placeholder="請輸入密碼">
-        <div class="status"></div>     
-        <button class="memberSignIn">Sign In</button>
-    </section>
+    <div class="secondPart">
+        <img src="/static/pic/second.png" class="findSpacePic">
+        <img src="/static/pic/find.png" class="textPic">
 
+    </div>
+
+    <div class="secondPart">
+        <img src="/static/pic/second-2.png" class="findSpacePic">
+        <img src="/static/pic/offer.png" class="textPic">
+
+    </div>
 
     <script src="/static/javascript/nav.js"></script>
     <script src="/static/javascript/login.js"></script>

@@ -1,3 +1,4 @@
+from sqlite3 import adapt
 from flask import Blueprint
 from flask import *
 import json
@@ -11,6 +12,14 @@ from settings import PARTNER_KEY
 
 
 orderAPI = Blueprint('order api', __name__)
+
+@orderAPI.route("/get/revenue", methods=['GET'])
+def getRevenue():
+    space_onwer_id = sql.getIdBySessionName(session['name'])[0]
+    revenue = sql.getRevenue(space_onwer_id)
+    return {'data':revenue}
+
+
 
 @orderAPI.route("/api/allOrder", methods=['GET'])
 def getAllOrder():
@@ -72,8 +81,11 @@ def getOrderData():
 
     #將車位變更為使用中
     #check if ture for update
-    sql.changeSpaceStatusToFalse(spaceId)
-    
+    affectedRow = sql.changeSpaceStatusToFalse(spaceId)
+    print('######## AFFECTED ROWS #######', affectedRow)
+    if affectedRow != 1:
+        return {'status':'order failed'}
+        
     #輸入使用者開始使用時間並取得訂單編號
     now = datetime.now()
     current_time = now.strftime("%H:%M")

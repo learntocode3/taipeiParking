@@ -98,6 +98,9 @@ function getLatestUserSearch(){
                         console.log(data.data)
                         if (data.status === "ok"){
                             location.replace(`/order/${data.orderId}`); 
+                        } else {
+                            alert('已經被預訂，請重新點選！');
+                            location.replace('/booking')
                         }
                     })
                 })

@@ -358,10 +358,12 @@ def changeSpaceStatusToFalse(spaceId):
     change_status = ("UPDATE supply_status SET space_status='false' WHERE parking_space_id= %s")
     id = (spaceId,)
     cursor.execute(change_status, id)
+    affect = cursor.rowcount
     cnx.commit()
     print("車位狀況變更為false")
     cursor.close()
     cnx.close()
+    return affect
 
 # changeSpaceStatusToFalse(4)
 
@@ -580,3 +582,14 @@ def getTenLastestOrderAveragePrice(parking_space_id):
 
 # a = getTenLastestOrderAveragePrice(7)
 # print(a[0][0])
+
+def getRevenue(space_onwer_id):
+    cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
+    cursor = cnx.cursor()
+    query = ("select member.name, supply.parking_space_id, supply.parking_space_address, user_order.total_fee from member inner join supply on member.id = supply.space_onwer_id inner join user_order on supply.parking_space_id = user_order.parking_space_id where user_order.total_fee is not null and member.id= %s")
+    data_query=(space_onwer_id,)
+    cursor.execute(query, data_query)
+    data = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return data
