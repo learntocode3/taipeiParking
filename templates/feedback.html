@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <link rel= "stylesheet" type="text/css" href="/static/css/feedback.css">
+    <title>FeedBack</title>
+</head>
+<body>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="member">會員</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div class="star">
+            <div>這次停車的評分</div>
+            <table>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="s-1"></td>
+                    <td><input type="checkbox" name="s-2"></td>
+                    <td><input type="checkbox" name="s-3"></td>
+                    <td><input type="checkbox" name="s-4"></td>
+                    <td><input type="checkbox" name="s-5"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="comment">
+            <label>請寫下您的評價</label><textarea name="comment" placeholder="請輸入您的評價"></textarea>
+            <button class="sendFeed">送出</button>
+        </div>
+    </section>
+
+
+    <script src="/static/javascript/nav.js"></script>
+    <script>
+        statusCheck();
+        const orderId = document.URL.split("/").slice(-1)
+        const sendFeed=document.querySelector(".sendFeed")
+
+        sendFeed.addEventListener('click', getValue)
+
+        function getValue(e){
+            e.preventDefault;
+            const s1=document.querySelector('input[name="s-1"]').checked
+            const s2=document.querySelector('input[name="s-2"]').checked
+            const s3=document.querySelector('input[name="s-3"]').checked
+            const s4=document.querySelector('input[name="s-4"]').checked
+            const s5=document.querySelector('input[name="s-5"]').checked
+            const comment = document.querySelector('textarea[name="comment"]').value
+            let stars = [s1, s2, s3, s4, s5]
+            let star;
+            for (let i=0; i<5; i++){
+                if (stars[i] === true){
+                    star=i+1
+                }
+            }
+            console.log(comment)
+            console.log(star)
+            feedBackData={
+                'orderId':orderId[0],
+                'comment':comment,
+                'star':star
+            }
+            fetch('/api/feedback',{
+                method:'POST',
+                body:JSON.stringify(feedBackData),
+                headers: new Headers({
+                    "content-type":"application/json"
+                })
+            })
+            .then(res => res.json())
+            .then(function(data){
+                alert('感謝您的回饋');
+                location.replace('/');
+
+            })
+        }
+
+
+
+        
+    </script>
+</body>
+</html>

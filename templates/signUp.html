@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        section{
+            display:flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        section > div{
+            margin-bottom: 10px;
+        }
+        section > input{
+            margin-bottom: 10px;
+            width: 280px;
+            height: 35px;
+        }
+        button{
+            width: 280px;
+            color: white;
+            background-color: rgb(91, 91, 227);
+            border: none;
+            padding: 10px 10px;
+            border-radius: 4px;
+        }
+    </style>
+    <title>Sign Up</title>
+</head>
+<body>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+                <div class="member">會員中心</div>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div>快來使用Ezpark吧！</div>
+        <input type="text" name="name" placeholder="請輸入姓名">
+        <input type="text" name="email" placeholder="請輸入信箱">
+        <input type="text" name="phone" placeholder="請輸入手機 ex: +886912345678">
+        <input type="password" name="password" placeholder="請輸入密碼">
+        <div class="status"></div>
+        <button class="memberSignUp">註冊</button>
+    </section>
+    
+   
+
+    <script src="/static/javascript/nav.js"></script>
+    <script src="/static/javascript/signup.js"></script>
+    
+</body>
+</html>

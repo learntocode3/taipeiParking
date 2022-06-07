@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .availableList{
+            display: flex;
+            margin: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            justify-content: space-between;
+            border: 1px solid rgb(179, 175, 175);
+        }
+    </style>
+    <title>Available</title>
+</head>
+<body>
+    <a href="/">回首頁</a>
+    <div class='available'></div>
+    <script>
+        const available = document.querySelector('.available')
+        getAvailable();
+        function getAvailable(){
+            fetch('/api/available')
+            .then(res => res.json())
+            .then(function(data){
+                console.log(data.availableData)
+                
+                const fragment = document.createDocumentFragment();
+                for (let i=0; i < data.availableData.length; i ++){
+                    const availableList = document.createElement('div');
+                    availableList.classList = 'availableList'
+                    availableList.innerText = data.availableData[i][0];
+                    
+                    const remainNum = document.createElement('div');
+                    if (data.availableData[i][1] === 'true'){                       
+                        remainNum.innerText = '剩餘：1';
+                    } else {
+                        remainNum.innerText = '剩餘：0';                        
+                    }
+
+
+                    availableList.appendChild(remainNum)
+                    fragment.appendChild(availableList)
+                } 
+                available.appendChild(fragment);
+            })
+        }
+    </script>
+</body>
+</html>

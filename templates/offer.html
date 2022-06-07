@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <link rel= "stylesheet" type="text/css" href="/static/css/index.css">
+    <title>Taipei Parking</title>
+</head>
+<body>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="member">會員</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+            </div>
+        </div>
+    </nav>
+
+    <div class="logo"></div>
+
+    <section>
+        <div class="findOrOffer">
+            <div id="findSpace">提供您寶貴的車位</div>
+        </div>
+
+        <div class="offerSpaceInput">
+            <label>地點：</label><input name="parking_space_address">
+            <label>地點描述：</label><input name="parking_space_name"  placeholder="EX: 內湖站鄰近車位 ">
+            <label>停車格號碼：</label><input name="parking_space_number"  placeholder="EX: 若無請填無 ">
+            <label>價錢（每小時）：</label><input name="offerPrice">
+            <label>請提供照片：</label><input type="file" name="image" id="image">
+            
+            <label>請提供最多三個時間段</label>
+
+            <label for="from">時段一開始：</label>
+            <input type="time" id="section-1-start" name="from" step="3600000">
+            <label for="to">時段一結束：</label>
+            <input type="time" id="section-1-end" name="to" step="3600000">
+
+            <label for="from">時段二開始：</label>
+            <input type="time" id="section-2-start" name="from" step="3600000">
+            <label for="to">時段二結束：</label>
+            <input type="time" id="section-2-end" name="to" step="3600000">
+
+            <label for="from">時段三開始：</label>
+            <input type="time" id="section-3-start" name="from" step="3600000">
+            <label for="to">時段三結束：</label>
+            <input type="time" id="section-3-end" name="to" step="3600000">
+
+            
+        </div>
+
+        <button class="offerSpaceBtn">送出</button>  
+        
+    </section>
+    
+    <script src="/static/javascript/nav.js"></script>
+    <script src="/static/javascript/offer.js"></script>
+</body>
+</html>

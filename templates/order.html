@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <style>
+        .finishBtn{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        .text{
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding: 15px; 
+        }
+        .currentAccumulateFee{
+            margin-bottom: 20px;
+        }
+        button{
+            width: 230px;
+            color: white;
+            background-color: rgb(91, 91, 227);
+            border: none;
+            padding: 5px 0px;
+            border-radius: 6px;
+        }
+    </style>
+    <title>order</title>
+</head>
+<body>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="member">會員</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+            </div>
+        </div>
+    </nav>
+    <div class="finishBtn">
+        <div class="text">已經為您保留車位，若要結束停車請按下方按鍵（會酌收手續費5元）</div>
+        <div class="currentAccumulateFee"></div>
+        <button id="finishBtn">結束停車</button>
+    </div>
+
+    <script src="/static/javascript/nav.js"></script>
+    <script src="/static/javascript/order.js"></script>
+</body>
+</html>

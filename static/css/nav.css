@@ -1,0 +1,46 @@
+.top{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.left{
+    font-size: 30px;
+    font-weight:bold;
+    margin-left: 45px;
+    cursor: pointer;
+}
+.right{
+    display:flex;
+    margin-right: 40px;
+}
+.right > div {
+    margin-left: 5px;
+    border-radius: 5px;
+    width:80px;
+    padding: 3px 8px;
+    text-align: center;
+    border: 1px solid rgb(179, 175, 175);
+    cursor: pointer;
+}
+.logOut{
+    display: none;
+}
+
+.member{
+    display: none;
+}
+
+@media(max-width:800px){
+    .top{
+        justify-content: space-around;
+    }
+    .right > div {
+        width: 40px;
+        font-size: 12px;
+    }
+    .left{
+        font-size: 20px;
+    }
+
+}

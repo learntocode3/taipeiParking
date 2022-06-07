@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type="text/css" href="/static/css/nav.css">
+    <style>
+        .all{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button{
+            width: 230px;
+            color: white;
+            background-color: rgb(91, 91, 227);
+            border: none;
+            padding: 5px 0px;
+            border-radius: 6px;
+        }
+        .feedBack{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgb(179, 175, 175);
+            margin-bottom: 15px;
+            margin-top: 10px;
+            padding: 15px 20px;
+        }
+        .Q1{
+            font-weight: 500;
+        }
+        .Q2{
+            font-size: 12px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .feedBackLink{
+            width: 150px;
+            color: white;
+            background-color: black;
+            border: none;
+            padding: 5px 0px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+    <title>Thank you</title>
+</head>
+<body>
+    <nav>
+        <div class="top">
+            <div class="left">EZpark</div>  
+            <div class="right">
+                <div class="rentNow">找車位</div>
+                <div class="offerNow">供車位</div>
+                <div class="signIn">登入</div>
+                <div class="logOut">登出</div>
+                <div class="signUp">註冊</div>    
+                <div class="member">會員</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="all">
+        <div class="record"></div>
+        <div class="feedBack">
+            <div class="Q1">您對這份訂單的評價如何？</div>
+            <div class="Q2">請為您的訂購體驗評分，協助我們推薦更適合的車位。</div>
+            <div class="feedBackLink">前往評分</div>
+            <a href="/" style="margin:10px;">以後再說，先回首頁</a>
+        </div>
+        <button id="refundBtn">車位有狀況，及時退款</button>
+    </div>
+
+<script src="/static/javascript/nav.js"></script>
+<script>
+    const orderId = document.URL.split("/").slice(-1)
+    const feedBackLink=document.querySelector('.feedBackLink')
+    feedBackLink.addEventListener('click', directToFeedbBack)
+
+    function directToFeedbBack(){
+        window.location.replace(`/feedback/${orderId[0]}`);
+    }
+
+
+
+    //console.log(orderId[0])
+    const record=document.querySelector('.record')
+    record.innerHTML="感謝您這次的消費，"+"這次的訂單編號："+ orderId[0]
+
+    const refundBtn=document.querySelector('#refundBtn')
+
+    refundBtn.addEventListener("click", function(){
+    orderData={'orderId':orderId[0]}
+    fetch('/api/refund/order',{
+        method:'POST',
+        body:JSON.stringify(orderData),
+        headers: new Headers({
+            "content-type":"application/json"
+        })
+    })
+    .then(res => res.json())
+    .then(function(data){
+        console.log(data.data)
+        if (data.data === "refundOk"){
+            alert('系統已經自動退款')
+            location.replace('/')
+        }
+    
+    })
+})
+
+</script>
+    
+</body>
+</html>
