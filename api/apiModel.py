@@ -481,7 +481,9 @@ def getPop(supplyAddress):
         # 計算（已經篩選完可以提供的車位）跟 （一小時以內被搜尋的地址們）的距離 
 
         toleranceDistance = 1 # 1km 為可接受的距離
-        popularity = []
+        # popularity = []
+        popularity = 0
+
         for i in range(len(searchDataWithin1Hour)):
             # print(searchDataWithin1Hour)
             # print("###################",i,"############",searchDataWithin1Hour[i][1])
@@ -495,14 +497,16 @@ def getPop(supplyAddress):
 
             if dist <= toleranceDistance:
                 print("###Popularity: ", popularity)  
-                popularity.append([searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
+                # popularity.append([searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
+                popularity += 1
             else:
                 print(dist)
                 print('not append into list',[searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
         # print("###Popularity: ", popularity)        
         return popularity
     # print("###Popularity: ", 0) 
-    return []
+    # return []
+    return popularity
 
 # a = getPop('民權東路二段')
 # print(a)
