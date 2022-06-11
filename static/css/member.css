@@ -1,19 +1,43 @@
+section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 .text{
     display: flex;
     justify-content: space-evenly;
     margin-top: 40px;
+    flex-direction: column;
+    align-items: center;
 }
 .text > div {
     display: flex;
     align-items: center;
     border: 1px solid rgb(179, 175, 175);
     border-radius: 5px;
-    width: 30%;
+    width: 100%;
     height: 100px;
     justify-content: center;
     cursor: pointer;
     margin: 10px;
 }
+.allOrder:hover{
+    background-color: lightslategray;
+    color:white;
+}
+.changeCredit:hover{
+    background-color: lightslategray;
+    color:white;
+}
+.updateSpace:hover{
+    background-color: lightslategray;
+    color:white;
+}
+.memberInfo:hover{
+    background-color: lightslategray;
+    color:white;
+}
+
 .spaceList{
     display: flex;
     flex-direction: column;

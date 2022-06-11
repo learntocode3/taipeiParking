@@ -1,7 +1,8 @@
 FROM redis
 RUN apt update
-RUN apt install python3-pip
+RUN apt install -y python3-pip
 WORKDIR /taipeiParking
 ADD . /taipeiParking
 RUN pip install -r requirements.txt
 CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "app:app"]
+CMD ["redis-server"]
