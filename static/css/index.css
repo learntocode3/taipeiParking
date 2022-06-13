@@ -75,6 +75,24 @@ section{
     border-radius: 4px;
 }
 
+.available{
+    width: 390px;
+    padding-top: 10px;
+    background: #ededed;
+    height: 592px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    margin-top: 50px;
+    margin-right: 80px;
+}
+.availableList{
+    display: flex;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+
 @media(max-width:800px){
     section{
         width: 300px;
