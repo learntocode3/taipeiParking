@@ -28,7 +28,7 @@ test password: ply
 ### Networking
 + HTTP & HTTPS
 + Domain Name System
-+ Ngninx
++ Nginx
 + Gunicorn
 + SSL
 
