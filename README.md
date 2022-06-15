@@ -8,6 +8,8 @@ test account: ply@ply.com
 
 test password: ply
 
+![Demo](/Demo_GIF.gif)
+
 ## Backend Technique
 
 ### Infrastructure
