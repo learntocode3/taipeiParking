@@ -6,23 +6,6 @@ import sys
 sys.path.append('./')
 from settings import RDS_HOST, USER, PASSWORD
 
-# dbconfig = { 
-#     'host':'ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com',
-#     'user':USER,
-#     'database':'ezpark',
-#     'password':PASSWORD,
-#     'auth_plugin':'mysql_native_password'
-# }
-
-# cnxpool = mysql.connector.pooling.MySQLConnectionPool(pool_name = "mypool",
-#                                                       pool_size = 32,
-#                                                       **dbconfig)
-
-
-    # cnx = mysql.connector.connect(host='ezpark-space.cfplaoqwsox0.us-east-1.rds.amazonaws.com', user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
-    # cursor = cnx.cursor()
-
-
 #每次檢查要資料
 def getUserInfo(name):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
@@ -36,13 +19,7 @@ def getUserInfo(name):
     cursor.close()
     cnx.close()
     return user
-    # data = {}
-    # data['data'] = {}
-    # if user:
-    #     data['data']['id'] = user[0]
-    #     data['data']['name'] = user[1]
-    #     data['data']['email'] = user[2]
-    #     return data
+
 
 def checkOrder(member_id, offset):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
