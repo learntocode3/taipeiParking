@@ -19,27 +19,6 @@ cnx = mysql.connector.connect(
 cursor = cnx.cursor()
 
 #---------------------------------------------------------------------------
-
-#本機端資料庫
-# import mysql.connector
-# from mysql.connector import errorcode
-# import json
-
-# import sys
-# sys.path.append('./')
-# from settings import USER, PASSWORD
-
-
-# # print(USER,PASSWORD)
-
-# # connect to mysql
-# DB_NAME = 'ezpark'
-# cnx = mysql.connector.connect(user=USER,
-#                               password=PASSWORD,
-#                               auth_plugin='mysql_native_password')
-# cursor = cnx.cursor()
-
-#---------------------------------------------------------------------------
 # Create datebase if not exist
 def create_database(cursor):
     try:

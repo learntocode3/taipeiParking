@@ -2,7 +2,6 @@ from flask import Blueprint
 from flask import *
 import json
 import api.apiModel as sql
-# from api.apiModel import db_getIdBySessionName, db_insertToSupply, db_insertToSupplyStatus, db_insertToSupplyTimetable, db_checkIfSpaceNumberExist
 from api.gps import getGPS
 
 import sys
@@ -39,13 +38,10 @@ def insertOffer():
     parking_space_name = req['addressName']
     parking_space_address = req['address']
     parking_space_number = req['parking_space_number']
-    # print(parking_space_name, parking_space_address, parking_space_number)
     GPS = getGPS(parking_space_address)
     longtitude = GPS[1]
     latitude = GPS[0]
-    # print(longtitude, latitude)
     price_per_hour = req['price']
-    # print(price_per_hour)
     time_1_start = req['time']['section-1-start']
     time_1_end = req['time']['section-1-end']
     time_2_start = req['time']['section-2-start']
@@ -59,13 +55,11 @@ def insertOffer():
         return {"data": "車位號碼已經存在"}
 
     #上傳到s3
-    # s3.upload_file(picturePath, BUCKET_NAME, pictureName)
     s3.upload_fileobj(image, BUCKET_NAME, pictureName)
     print('success saved the image to S3')    
     
     #新增資料到四個表
     id = sql.insertToSupply(space_onwer_id, parking_space_name, parking_space_address, parking_space_number, longtitude, latitude, price_per_hour, parking_space_image)
-    # print(id)
     sql.insertToCheckSpaceNum(id[0], parking_space_address, parking_space_number)
     sql.insertToSupplyStatus(id[0], "true")
     sql.insertToSupplyTimetable(id[0], time_1_start, time_1_end, time_2_start, time_2_end, time_3_start, time_3_end)
