@@ -6,9 +6,6 @@ import sys
 sys.path.append('./')
 from settings import USER, PASSWORD
 
-
-# print(USER,PASSWORD)
-
 # connect to mysql
 DB_NAME = 'ezpark'
 cnx = mysql.connector.connect(

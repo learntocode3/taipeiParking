@@ -17,24 +17,9 @@ def checkUserStatus():
     if "name" in session:
         print("##########",session['name'])
         data = sql.getUserInfo(session['name'])
-        # print(data)
-        # print(data)
-        # print(session['name'])
-        #--------------------------------------------
-        # checkIfOrder = sql.checkOrder(data[0])
-        # print(checkIfOrder)
-        # if checkIfOrder:
-        #     id=checkIfOrder[0]
-        # else:
-        #     id=None
-
-        
-        #     return redirect(f'http://127.0.0.1:3000/order/{id}')
-        #-----------------------------------------------------------------
         if data:
             print(data[0])
-            return {"data": "ok", 'memberId':data[0]} #, "orderid":id}
-        # return {"data": None}
+            return {"data": "ok", 'memberId':data[0]} 
     return {"data": None}
 
 
@@ -42,7 +27,6 @@ def checkUserStatus():
 def signup():
     req = request.get_json()
     isExist = sql.checkIfEmailExist(req['email'])
-    # print(isExist)
     if isExist:
         return {
                 "error": True,
@@ -74,7 +58,6 @@ def signout():
 @userAPI.route("/api/user/card", methods=["POST"])
 def getCreditCard():
     req = request.get_json()
-    # print("###########################", req)
     prime=req['prime']
     member_id = req['id']
     personalInfoForCard=sql.getMemberData(member_id)

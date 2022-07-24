@@ -52,17 +52,14 @@ def insertFeedBack():
 @orderAPI.route("/api/render/order", methods=['POST'])
 def renderOrderData():
     req=request.get_json()
-    # print("finish",req)
     orderId=req['orderId']
     orderData = sql.getOrderData(orderId)
     startTime=orderData[3]
     finalPricePerHour=orderData[6]
     now = datetime.now()
     upToTime = now.strftime("%H:%M")
-
     startTime = datetime.strptime(startTime,'%H:%M')
     finish_time = datetime.strptime(upToTime,'%H:%M')
-
     UsageMinutes =  finish_time - startTime
     UsageMinutes = int(UsageMinutes.total_seconds()/60.0)
     finalPrice = int((UsageMinutes*finalPricePerHour)/60)
@@ -89,7 +86,6 @@ def getOrderData():
     #輸入使用者開始使用時間並取得訂單編號
     now = datetime.now()
     current_time = now.strftime("%H:%M")
-    # print(current_time)
     order_id = sql.insertOrder(user_id, spaceId, current_time, finalPrice)
     return {'orderId':order_id[0],
             'spaceId':spaceId,
@@ -101,7 +97,6 @@ def getOrderData():
 @orderAPI.route("/api/finish/order", methods=['POST'])
 def finishOrder():
     req=request.get_json()
-    # print("finish",req)
     orderId=req['orderId']
     orderData = sql.getOrderData(orderId)
     print(orderData)
@@ -109,13 +104,11 @@ def finishOrder():
     spaceId=orderData[2]
     startTime=orderData[3]
     finalPricePerHour=orderData[6]
-    # print(startTime)
 
     # #車位恢復提供並新增結束時間到訂單
     sql.changeSpaceStatusToTrue(spaceId)
     now = datetime.now()
     finish_time = now.strftime("%H:%M")
-    # print(finish_time)
     sql.updateOrder(orderId, finish_time)
 
     #計算本次停車時數
@@ -171,7 +164,6 @@ def finishOrder():
 @orderAPI.route("/api/refund/order", methods=['POST'])
 def refundOrder():
     req=request.get_json()
-    # print(req)
     orderId=req['orderId']
     rec_trade_id = sql.getrecTradeId(orderId)
 

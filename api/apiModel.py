@@ -10,8 +10,6 @@ from settings import RDS_HOST, USER, PASSWORD
 def getUserInfo(name):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM member WHERE member.name = %s")
     data_query=(name,)
     cursor.execute(query, data_query)
@@ -45,15 +43,12 @@ def memberSignin(email, password):
     cursor.close()
     cnx.close()
     if user:
-        #print(user)
         return user
 
 #檢查使用者信箱是否已經被註冊
 def checkIfEmailExist(email):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM member WHERE member.email = %s")
     data_query=(email, )
     cursor.execute(query, data_query)
@@ -86,8 +81,6 @@ def addNewMember(name, email, phone, password):
 def getMemberData(member_id):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()    
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM member WHERE id = %s")
     data_query=(member_id, )
     cursor.execute(query, data_query)
@@ -95,16 +88,10 @@ def getMemberData(member_id):
     cursor.close()
     cnx.close()
     return user
-  
-# a = getMemberData(9)
-# print(a)
 
 def addCreditCard(member_id, card_token, card_key):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     change_status = ("UPDATE member SET card_token=%s, card_key=%s WHERE id= %s")
     card_data = (card_token, card_key, member_id)
     cursor.execute(change_status, card_data)
@@ -118,9 +105,6 @@ def addCreditCard(member_id, card_token, card_key):
 def getIdBySessionName(name):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()    
-    
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT member.id FROM member WHERE member.name = %s")
     data_query=(name,)
     cursor.execute(query, data_query)
@@ -154,9 +138,6 @@ def insertToSupply(space_onwer_id, parking_space_name, parking_space_address,par
 def insertToSupplyStatus(parking_space_id, space_status):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()    
-    
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     add_supply_status = ("INSERT INTO supply_status "
                   "VALUES (%s, %s)")
     data_supply = (parking_space_id, space_status)
@@ -186,9 +167,6 @@ def insertToSupplyTimetable(id, time_1_start, time_1_end, time_2_start, time_2_e
 def checkIfSpaceNumberExist(parking_space_address, parking_space_number):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM check_spaceNum WHERE parking_space_address = %s AND parking_space_number= %s")
     data_query=(parking_space_address, parking_space_number)
     cursor.execute(query, data_query)
@@ -200,9 +178,6 @@ def checkIfSpaceNumberExist(parking_space_address, parking_space_number):
 def selectAllGps():
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT supply.latitude, supply.longtitude, supply.parking_space_id FROM supply JOIN supply_status ON supply.parking_space_id = supply_status.parking_space_id WHERE supply_status.space_status='true' ")
     cursor.execute(query,)
     allGPS = cursor.fetchall()
@@ -210,15 +185,9 @@ def selectAllGps():
     cnx.close()
     return allGPS
 
-# a = selectAllGps()
-# print(a)
-
 def checkTime(parkingID):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM supply_timetable WHERE parking_space_id = %s")
     data_query=(parkingID, )
     cursor.execute(query, data_query)
@@ -227,14 +196,9 @@ def checkTime(parkingID):
     cnx.close()
     return timetable
 
-# a = checkTime(4)
-# print(a)
-
 def getAddressNumPriceById(parkingID):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT parking_space_address, price_per_hour, parking_space_number, parking_space_image FROM supply WHERE parking_space_id = %s")
     data_query=(parkingID, )
     cursor.execute(query, data_query)
@@ -243,8 +207,6 @@ def getAddressNumPriceById(parkingID):
     cnx.close()
     return info
 
-# a = getAddressPriceById(7)
-# print(a)
 def getComment(parkingID):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
@@ -260,8 +222,6 @@ def getComment(parkingID):
 def insertToCheckSpaceNum(parking_space_id, parking_space_address, parking_space_number):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     add_supply_checkSpaceNum = ("INSERT INTO check_spaceNum "
                   "VALUES (%s, %s, %s)")
     data_supply = (parking_space_id, parking_space_address, parking_space_number)
@@ -275,8 +235,6 @@ def insertToCheckSpaceNum(parking_space_id, parking_space_address, parking_space
 def insertUserSearch(user_id, demandAddress, demandPrice, demandStart, demandEnd):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     add_searchData = ("INSERT INTO search_data (user_id, demandAddress, demandPrice, demandStart, demandEnd)"
                   "VALUES (%s, %s, %s, %s, %s)")
     data_supply = (user_id, demandAddress, demandPrice, demandStart, demandEnd)
@@ -286,14 +244,9 @@ def insertUserSearch(user_id, demandAddress, demandPrice, demandStart, demandEnd
     cursor.close()
     cnx.close()   
 
-
-# insertUserSearch(1, "asdfasd", 21, "12:30", "15:30")
-
 def getSearchData(user_id):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM search_data WHERE user_id = %s ORDER BY search_time DESC LIMIT 0,1")
     data_query=(user_id,)
     cursor.execute(query, data_query)
@@ -302,15 +255,9 @@ def getSearchData(user_id):
     cnx.close()
     return user
 
-# a = getSearchData(1)
-# print(a)
-
-
 def insertOrder(user_id, spaceId, current_time, final_price):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     add_order = ("INSERT INTO user_order (member_id, parking_space_id, time_start, final_price)"
                   "VALUES (%s, %s, %s, %s)")
     data_order = (user_id, spaceId, current_time, final_price)
@@ -324,14 +271,9 @@ def insertOrder(user_id, spaceId, current_time, final_price):
     print("成功新增的訂單ID")
     return id
 
-# a = insertOrder(2, 8, "13:00")
-# print(a)
-
 def changeSpaceStatusToFalse(spaceId):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     change_status = ("UPDATE supply_status SET space_status='false' WHERE parking_space_id= %s")
     id = (spaceId,)
     cursor.execute(change_status, id)
@@ -342,14 +284,9 @@ def changeSpaceStatusToFalse(spaceId):
     cnx.close()
     return affect
 
-# changeSpaceStatusToFalse(4)
-
-
 def changeSpaceStatusToTrue(spaceId):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     change_status = ("UPDATE supply_status SET space_status='true' WHERE parking_space_id= %s")
     id = (spaceId,)
     cursor.execute(change_status, id)
@@ -358,17 +295,9 @@ def changeSpaceStatusToTrue(spaceId):
     cursor.close()
     cnx.close()       
 
-# changeSpaceStatusToTrue(5)
-# changeSpaceStatusToTrue(7)
-# changeSpaceStatusToTrue(9)
-# changeSpaceStatusToTrue(10)
-
-
 def updateOrder(order_id, finish_time):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     change_status = ("UPDATE user_order SET time_end=%s WHERE order_id= %s")
     finish_time = (finish_time, order_id)
     cursor.execute(change_status, finish_time)
@@ -381,8 +310,6 @@ def updateOrder(order_id, finish_time):
 def getOrderData(orderId):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT * FROM user_order WHERE order_id = %s ")
     data_query=(orderId,)
     cursor.execute(query, data_query)
@@ -391,14 +318,10 @@ def getOrderData(orderId):
     cnx.close()
     return data
 
-# a = getOrderData(4)
-# print(a)
 
 def getCardSecret(user_id):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT card_token, card_key FROM member WHERE id = %s")
     data_query=(user_id,)
     cursor.execute(query, data_query)
@@ -407,14 +330,9 @@ def getCardSecret(user_id):
     cnx.close()
     return data
 
-# a = getCardSecret(11)
-# print(a)
-
 def addRecTradeId(orderId, rec_trade_id, totalFee):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     change_status = ("UPDATE user_order SET rec_trade_id=%s, total_fee=%s WHERE order_id= %s")
     rec_trade_data = (rec_trade_id, totalFee, orderId)
     cursor.execute(change_status, rec_trade_data)
@@ -423,14 +341,10 @@ def addRecTradeId(orderId, rec_trade_id, totalFee):
     cursor.close()
     cnx.close()  
 
-# addRecTradeId(16, 'D20220517YrljSY')
-
 
 def getrecTradeId(orderId):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     query = ("SELECT rec_trade_id FROM user_order WHERE order_id = %s")
     data_query=(orderId,)
     cursor.execute(query, data_query)
@@ -438,9 +352,6 @@ def getrecTradeId(orderId):
     cursor.close()
     cnx.close()
     return data
-
-# a = getrecTradeId(16)
-# print(a[0])
 
 # 用 1 小時內所有的搜尊資料來計算熱門程度
 def getPop(supplyAddress):
@@ -452,7 +363,6 @@ def getPop(supplyAddress):
     cursor.close()
     cnx.close()
     print("所有的搜尋紀錄：", searchDataWithin1Hour)
-    # print("第五個：", searchDataWithin1Hour[0][5])
     if searchDataWithin1Hour:
     
         # 計算（已經篩選完可以提供的車位）跟 （一小時以內被搜尋的地址們）的距離 
@@ -462,8 +372,6 @@ def getPop(supplyAddress):
         popularity = 0
 
         for i in range(len(searchDataWithin1Hour)):
-            # print(searchDataWithin1Hour)
-            # print("###################",i,"############",searchDataWithin1Hour[i][1])
             demand = getGPS(searchDataWithin1Hour[i][1])
             if demand == False:
                 continue 
@@ -474,19 +382,12 @@ def getPop(supplyAddress):
 
             if dist <= toleranceDistance:
                 print("###Popularity: ", popularity)  
-                # popularity.append([searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
                 popularity += 1
             else:
                 print(dist)
-                print('not append into list',[searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])
-        # print("###Popularity: ", popularity)        
+                print('not append into list',[searchDataWithin1Hour[i][1], searchDataWithin1Hour[i][5]])   
         return popularity
-    # print("###Popularity: ", 0) 
-    # return []
     return popularity
-
-# a = getPop('民權東路二段')
-# print(a)
 
 
 def getSupplyList(space_onwer_id):
@@ -503,8 +404,6 @@ def getSupplyList(space_onwer_id):
 def updateSupplyPrice(spaceId, newPrice):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
-    # cnx = cnxpool.get_connection()
-    # cursor = cnx.cursor()
     change_status = ("UPDATE supply SET price_per_hour=%s WHERE parking_space_id= %s")
     price_data = (newPrice, spaceId)
     cursor.execute(change_status, price_data)
@@ -560,9 +459,6 @@ def getTenLastestOrderAveragePrice(parking_space_id):
     cursor.close()
     cnx.close()
     return data[0][0]
-
-# a = getTenLastestOrderAveragePrice(7)
-# print(a[0][0])
 
 def getRevenue(space_onwer_id):
     cnx = mysql.connector.connect(host=RDS_HOST, user=USER, password=PASSWORD, database='ezpark', auth_plugin='mysql_native_password')

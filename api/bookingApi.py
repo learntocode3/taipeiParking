@@ -16,7 +16,6 @@ def getAvailable():
 @bookingAPI.route("/api/getUserLocation", methods=['POST'])
 def getUserLocation():
     req=request.get_json()
-    # print(req)
     address = reverseGeo(req['latitude'], req['longtitude'])
     curAddress = address['results'][0]['formatted_address']
     return {'data':curAddress}
@@ -24,7 +23,6 @@ def getUserLocation():
 @bookingAPI.route("/api/booking", methods=['POST'])
 def insertSearch():
     req=request.get_json()
-    # print(req)
     user_id = sql.getIdBySessionName(session['name'])[0]
     demandAddress = req['address']
     demandPrice = req['price']
@@ -57,9 +55,7 @@ def getMatchResult():
     toleranceDistance = 1 # 1km 為可接受的距離
 
     for i in range(len(supplyGPS)): # O(n)
-        # print(allGPS[i][0],allGPS[i][1])
         
-
         dist = getDistance(supplyGPS[i][0], supplyGPS[i][1], demandGps[0], demandGps[1]) 
         if dist <= toleranceDistance:
             parkingID = supplyGPS[i][2]
@@ -122,9 +118,7 @@ def getMatchResult():
     print( "所有符合篩選條件的車位：", availableParkingInfo)
     return {"data":availableParkingInfo}
 
-#imporove efficiectcy #寫一個reset supplyDict function
 
-# supplyDict = {} 
 import redis
 default_time = 3600
 
@@ -134,36 +128,14 @@ def getAdjustPrice(supplyAddress, base_price, demandAddress):
     print('快取字典：', supplyDict.keys())
     if supplyAddress in supplyDict.keys():
         print('有進入到快取')
-        # nowTime=datetime.now() - timedelta(hours=8)
-        # print("被存入紀錄 popularity 的字典:", supplyDict)
-        # popularity = supplyDict[supplyAddress]
         popularity = int(supplyDict.get(supplyAddress)) + 1
         supplyDict.setex(supplyAddress, default_time, popularity)
-        #現有的每一筆資料時間是否合理, clean
-        # clean = [] # 只保留符合 1 小時內的資料
-        # for i in range(len(supplyDict[supplyAddress])): 
-        #     timeDif = nowTime - supplyDict[supplyAddress][i][1]
-        #     minutes = timeDif.total_seconds() / 60
-        #     print('#跟現在的時間差：', minutes, '分鐘')
-        #     if minutes < 60:
-        #         print('大於60分鐘的資料：', supplyDict[supplyAddress][i])
-        #         # del supplyDict[supplyAddress][i]
-        #         # i -= 1
-        #         clean.append(supplyDict[supplyAddress][i])
-        # supplyDict[supplyAddress] = clean
-        
-        #加入當前資料
-        # supplyDict[supplyAddress].append([demandAddress, nowTime])
-        # popularity = supplyDict[supplyAddress]
         popularity = int(supplyDict.get(supplyAddress))
     else:
         print('沒有進入到快取')
         popularity = sql.getPop(supplyAddress)
         supplyDict.setex(supplyAddress, default_time, popularity)
-    # print("###",popularity)
-    # print('拿進去computePrice的pop:',len(popularity))
     print('拿進去computePrice的pop:', popularity)
-    # supplyPrice = computePrice(base_price, len(popularity))
     supplyPrice = computePrice(base_price, popularity)
     return  supplyPrice
 
@@ -172,14 +144,3 @@ def computePrice(base_price, popularity):
     print("### 拿到popularity後經過運算得到的價錢：",supplyPrice)
     return supplyPrice
 
-
-#low
- 
-#high
-
-# his = [(2,56),(6,57)]
-
-# sort 33 67
-
-# low = ? 
-# high = ? 
