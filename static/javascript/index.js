@@ -16,6 +16,10 @@ function sendSearchPlace(e){
     }
     document.querySelector('.mask').style.display = "block";
     console.log(searchData)
+    if(searchData.start > searchData.end){
+      alert('Please enter valid time')
+      window.location.replace('/')
+    }
     fetch('/api/booking',{
             method:'POST',
             body:JSON.stringify(searchData),
