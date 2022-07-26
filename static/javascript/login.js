@@ -4,6 +4,9 @@ const userAPI= '/api/user';
 const signIn=document.querySelector('.memberSignIn')
 signIn.addEventListener('click', memberSignin)
 
+document.querySelector('input[name="email"]').defaultValue = 'ply@ply.com'
+document.querySelector('input[name="password"]').defaultValue = 'ply'
+
 function memberSignin(e){
     e.preventDefault;
     console.log(1)
